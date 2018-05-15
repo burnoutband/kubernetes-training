@@ -7,15 +7,15 @@
 
 # Suggested topics
 
-- rolling updates
-- blue-green app deployments
+- rolling updates; Eugene Kiselev
+- blue-green app deployments; Eugene Kiselev
 - application logs
-- monitoring (grafana-heapster)
+- monitoring (grafana-heapster); Eugene Kiselev
 - services for k8s
-- debugging application
+- debugging application; Eugene Kiselev 
 - container isolation
 - container autoscaling
-- container network plugins
+- container network plugins 
 - k8s upgrading
 - cluster extension and scaling; Konstantin Burtsev
 - convert cluster to HA
