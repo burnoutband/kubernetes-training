@@ -17,7 +17,7 @@
 - container autoscaling
 - container network plugins
 - k8s upgrading
-- cluster extension and scaling
+- cluster extension and scaling; Konstantin Burtsev
 - convert cluster to HA
 - resource quotas
-- automation tools (kops, kubeadm, kubespray, kubo, helm)
+- automation tools (kops, kubeadm, kubespray, kubo, helm); Konstantin Burtsev
