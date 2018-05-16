@@ -46,7 +46,7 @@ A pod is a collection of containers sharing a network and mount namespace and is
       name: twocontainers
     spec:
       containers:
-      - name: sise
+      - name: simpleservice
         image: mhausenblas/simpleservice:0.5.0
         ports:
         - containerPort: 9876
