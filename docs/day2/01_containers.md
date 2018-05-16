@@ -10,9 +10,9 @@
     ```
     docker run -it ubuntu bash
     ```
-    This command runs `bash` inside container.
+    This command runs `bash` inside the container.
 
-1. Install `nginx` inside container.
+1. Install `nginx` inside the container.
     ```
     apt-get update
     apt-get install -y nginx
@@ -23,12 +23,12 @@
     docker ps
     ```
 
-1. Commit your changes to a new image. (Replace <conainer-id> with actuall container id)
+1. Commit your changes to a new image. (Replace <conainer-id> with actual container id)
     ```
     docker commit <container-id> my-image
     ``` 
 
-1. List all images and make sure that `my-image` is in the list.
+1. List all images and make sure that `my-image` is on the list.
     ```
     docker images
     ```
@@ -48,7 +48,7 @@
     * `-it` - attach to the container.
     * `-p 8080:80` - map port `80` in the container to port `8080` on the host system.
     * `my-image` - run image `my-image`
-    * `nginx -g 'daemon off;'` - start nginx in foreground mode. Without `daemon off` daemon offrameter nginx will start in a background process and the command finishes imediately. After start command finishes container will be killed.
+    * `nginx -g 'daemon off;'` - start nginx in foreground mode. Without `daemon off` parameter nginx will start in a background process, and the command finishes immediately. After start command finishes, container will be killed.
 
 1. Open `http://localhost:8080` in your web browser and make sure that nginx is available.
 
@@ -81,4 +81,5 @@
 1. Adopt previous example to use [host network](https://docs.docker.com/network/network-tutorial-host/). 
 1. Make sure you understand the difference between `host` and default `bridge` network.
 1. List all network interfaces while nginx container is running in `bridge` mode (use `ifconfig` or `ip addr show`). Find `docker0` network and check it CIDR range. Go inside running container (`docker exec -it <container-id> bash`) and find its IP. Try to access port 80  in the container from host machine by using container internal IP address.
+
 
