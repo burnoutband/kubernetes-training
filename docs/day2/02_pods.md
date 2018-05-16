@@ -19,7 +19,7 @@ A pod is a collection of containers sharing a network and mount namespace and is
     kubectl describe pod <pod-name>
     ```
 
-1. From GCP console VM instances tab ssh to any of the nodes, either workier or master. (GCP allows you to ssh using web browser just by clicking on SSH button) This step is required because by default pod netwrok is not open to outside world.
+1. From GCP console VM instances tab ssh to any of the nodes, either worker or master. (GCP allows you to ssh using web browser just by clicking on SSH button) This step is required because by default pod network is not open to outside world.
 
 1. Connect to the pod.
     ```
@@ -36,7 +36,7 @@ A pod is a collection of containers sharing a network and mount namespace and is
     kubectl delete deployment simpleservice 
     ```
 
-### Exercise 2: Launch a pod using configuration file
+### Exercise 2: Launch a pod using the configuration file
 
 1. Save the following file as `pod.yml`
     ```
@@ -83,3 +83,4 @@ A pod is a collection of containers sharing a network and mount namespace and is
 
 1. Push `nginx` image, created in the docker part of the course, to dockerhub. [link](https://ropenscilabs.github.io/r-docker-tutorial/04-Dockerhub.html)
 1. Run a pod using this image.
+
