@@ -7,72 +7,72 @@
 ### Exercise 1: Creating a custom image.
 
 1. Start container using `ubuntu` image and attach to it.
-  ```
-  docker run -it ubuntu bash
-  ```
-  This comman will run `bash` inside container.
+    ```
+    docker run -it ubuntu bash
+    ```
+    This command runs `bash` inside container.
 
 1. Install `nginx` inside container.
-  ```
-  apt-get update
-  apt-get install -y nginx
-  ```
+    ```
+    apt-get update
+    apt-get install -y nginx
+    ```
 
 1. In a separate terminal window list all running containers. Copy `CONTAINER ID` field.
-  ```
-  docker ps
-  ```
+    ```
+    docker ps
+    ```
 
 1. Commit your changes to a new image. (Replace <conainer-id> with actuall container id)
-  ```
-  docker commit <container-id> my-image
-  ``` 
+    ```
+    docker commit <container-id> my-image
+    ``` 
 
 1. List all images and make sure that `my-image` is in the list.
-  ```
-  docker images
-  ```
+    ```
+    docker images
+    ```
 
 1. Exit from the running container.
-  ```
-  exit
-  ```
+    ```
+    exit
+    ```
 
 ### Exercise 2: Exposing ports.
 
 1. Run previously created image. 
-  ```
-  docker run -it -p 8080:80 my-image nginx -g 'daemon off;'
-  ```
-  The arguments of this command have the following meaning:
-  * `-it` - attach to the container.
-  * `-p 8080:80` - map port `80` in the container to port `8080` on the host system.
-  * `my-image` - run image `my-image`
-  * `nginx -g 'daemon off;'` - start nginx in foreground mode. Without `daemon off` daemon offrameter nginx will start in a background process and the command finishes imediately. After start command finishes container will be killed.
+    ```
+    docker run -it -p 8080:80 my-image nginx -g 'daemon off;'
+    ```
+    The arguments of this command have the following meaning:
+    * `-it` - attach to the container.
+    * `-p 8080:80` - map port `80` in the container to port `8080` on the host system.
+    * `my-image` - run image `my-image`
+    * `nginx -g 'daemon off;'` - start nginx in foreground mode. Without `daemon off` daemon offrameter nginx will start in a background process and the command finishes imediately. After start command finishes container will be killed.
 
 1. Open `http://localhost:8080` in your web browser and make sure that nginx is available.
 
 ### Exercise 3: Mapping volumes.
 
 1. Run the following command.
-  ```
-  docker run -it -p 8080:80 -v /tmp/html:/var/www/html my-image nginx -g 'daemon off;'
-  ```
-  Here we are mapping `/tmp/html` folder on the host machine to the `/var/www/html` folder inside the container.
+    ```
+    docker run -it -p 8080:80 -v /tmp/html:/var/www/html my-image nginx -g 'daemon off;'
+    ```
+    Here we are mapping `/tmp/html` folder on the host machine to the `/var/www/html` folder inside the container.
 
 1. Save the following file as `index.html` inside `/tmp/html` folder.
-  ```
-  <!DOCTYPE html>
-  <html>
-  <body>
+    ```
+    <!DOCTYPE html>
+    <html>
+    <body>
 
-  <h1>My First Heading</h1>
+    <h1>My First Heading</h1>
 
-  <p>My first paragraph.</p>
+    <p>My first paragraph.</p>
 
-  </body>
-  </html>
-  ```
+    </body>
+    </html>
+    ```
 
 1. Open `http://localhost:8080/` and make sure that the content of the previously created file is displayed.
 
