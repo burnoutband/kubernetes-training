@@ -5,13 +5,16 @@ A deployment is a supervisor for pods and replica sets, giving you fine-grained 
 ### Exercise 1: Create a deployment 
 
 1. Save the following file as `deployment.yml`.
-    ```
+    ```console
     apiVersion: apps/v1
     kind: Deployment
     metadata:
-      name: simpleservice 
+      name: simpleservice
     spec:
       replicas: 2
+      selector:
+        matchLabels:
+          app: simpleservice
       template:
         metadata:
           labels:
