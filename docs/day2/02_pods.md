@@ -39,7 +39,7 @@ A pod is a collection of containers sharing a network and mount namespace and is
 ### Exercise 2: Launch a pod using the configuration file
 
 1. Save the following file as `pod.yml`
-    ```
+    ```console
     apiVersion: v1
     kind: Pod
     metadata:
@@ -51,7 +51,7 @@ A pod is a collection of containers sharing a network and mount namespace and is
         ports:
         - containerPort: 9876
       - name: shell
-        image: ubuntu 
+        image: centos:7
         command:
           - "bin/bash"
           - "-c"
