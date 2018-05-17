@@ -84,3 +84,8 @@ A pod is a collection of containers sharing a network and mount namespace and is
 1. Push `nginx` image, created in the docker part of the course, to dockerhub. [link](https://ropenscilabs.github.io/r-docker-tutorial/04-Dockerhub.html)
 1. Run a pod using this image.
 
+### Exercise 4 (Optional): Limit pod resources
+
+1. Set [resources](https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/) property to limit how much memory and CPU the pod can use.
+1. Use [stress](https://linux.die.net/man/1/stress) to load the container, see what happens.
+
