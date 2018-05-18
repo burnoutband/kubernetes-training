@@ -30,7 +30,7 @@ Keeping the mapping between the VIP and the pods up-to-date is the job of kube-p
         spec:
           containers:
           - name: master
-            image: redis
+            image: k8s.gcr.io/redis:e2e
             resources:
               requests:
                 cpu: 100m
@@ -192,6 +192,7 @@ Keeping the mapping between the VIP and the pods up-to-date is the job of kube-p
         app: guestbook
         tier: frontend
     ```
+    Pay attension to the service type.
 
 1. Deploy the fronted service.
     ```
@@ -213,4 +214,19 @@ Keeping the mapping between the VIP and the pods up-to-date is the job of kube-p
     kubectl scale deployment frontend –replicas=5
 
     ```
+
+### Exercise 2 (Optional): Investigate source code of the sample
+
+1. Source code of the sample can be found [here](https://github.com/kubernetes/examples/tree/master/guestbook) 
+1. The files we are interested in:
+    * Redis slave Dockerfile: [link](https://github.com/kubernetes/examples/blob/master/guestbook/redis-slave/Dockerfile)
+    * Redis slave startup script: [link](https://github.com/kubernetes/examples/blob/master/guestbook/redis-slave/run.sh)
+    * PHP application: [link](https://github.com/kubernetes/examples/blob/master/guestbook/php-redis/guestbook.php)
+1. Make sure you understand the following:
+    * How redis slave connects to redis master? What address it is using?
+    * How php app connects to both redis master and redis slave?
+
+### Exercise 4 (Optional): Manually connect to redis from app pod 
+
+1. Go inside any frontend pods. Use `redis-tools` package to install [redis-cli](https://redis.io/topics/rediscli) Use `redis-cli` to connect to redis master.
 
