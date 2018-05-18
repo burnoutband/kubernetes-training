@@ -8,17 +8,17 @@
 
 >Note: We will use the Google Cloud Shell which already has kubectl and gcloud tools installed.
 
-### Exercise 1: Accessing GCP
+### Exercise 1: Deploy kubernetes to GCP 
 
 1. Open the GCP console from your browser. [GCP Console](https://console.cloud.google.com/)
 
-2. Login and select the assigned project or create a new one from the top menu.
+1. Login and select the assigned project or create a new one from the top menu.
 
-3. Enable (if not aleady) the Compute Engine API here [GCP Console](https://console.cloud.google.com/apis/api/compute.googleapis.com/)
+1. Enable (if not aleady) the Compute Engine API here [GCP Console](https://console.cloud.google.com/apis/api/compute.googleapis.com/)
 
-4. Launch the Google Cloud Shell from the top right menu.
+1. Launch the Google Cloud Shell from the top right menu.
 
-5. Run the following commands to set the proper region and zone:
+1. Run the following commands to set the proper region and zone:
 
    ```console
    gcloud config set compute/region us-west1
@@ -27,9 +27,9 @@
    ```
 >Note: Further commands will all be run in this shell.
 
-### Exercise 2: Installing kops
+1. Install kops
 
-1.  Run the following commands to download and install kops:
+   Run the following commands to download and install kops:
 
    ```console
    curl -LO https://github.com/kubernetes/kops/releases/download/$(curl -s https://api.github.com/repos/kubernetes/kops/releases/latest | grep tag_name | cut -d '"' -f 4)/kops-linux-amd64
@@ -41,18 +41,18 @@
    PATH="$HOME/bin:$PATH"
    ```
 
-### Exercise 3: Creating a state store
+1. Create a state store
 
-1. Run the following command and replace `<unique value>` with your username or other.
+    Run the following command and replace `<unique value>` with your username or other.
 
     ```console
     gsutil mb gs://kubernetes-<unique value>/
     ```
     Here we are creating a GCP bucket to store the cluster configuration for kops
 
-### Exercise 4: Creating the cluster configuration
+1. Create the cluster configuration
 
-1. Run the following commands - remember to replace `<unique value>` with what you used in the previous step.
+   Run the following commands - remember to replace `<unique value>` with what you used in the previous step.
 
    ```console
    PROJECT=`gcloud config get-value project`
@@ -77,9 +77,9 @@
    export KOPS_STATE_STORE=gs://kubernetes-<unique value>/
    ```
 
-### Exercise 5: Building the cluster in GCE
+1. Building the cluster in GCE
 
-1. Run the following command and confirm the output
+   Run the following command and confirm the output
 
    ```console
    kops update cluster simple.k8s.local
@@ -98,3 +98,16 @@
    
    kubectl get nodes
    ```
+
+### Exercise 2 (Optional): Identify resources that have been created
+
+1. In GCE Cloud Console find and investigate the following resources, that have beed created as a result of previous exercises
+    * Compute Engine -> VM instances
+    * Compute Engine -> Disks
+    * Compute Engine -> Instance groups 
+    * Compute Engine -> Instance templates 
+    * VPC Network -> External IP addresses
+    * VPC Network -> Firewall rules
+    * Network services -> Load balancing
+    We will examine all created infrastructure in details on day 3.
+  
