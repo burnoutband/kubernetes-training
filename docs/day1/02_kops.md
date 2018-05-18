@@ -20,12 +20,12 @@
 
 1. Run the following commands to set the proper region and zone:
 
-   ```console
-   gcloud config set compute/region us-west1
+    ```console
+    gcloud config set compute/region us-west1
 
-   gcloud config set compute/zone us-west1-c
-   ```
->Note: Further commands will all be run in this shell.
+    gcloud config set compute/zone us-west1-c
+    ```
+    >Note: Further commands will all be run in this shell.
 
 1. Install kops
 
