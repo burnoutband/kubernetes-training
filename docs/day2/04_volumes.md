@@ -10,7 +10,7 @@
 
 1. Create a Secret for MySQL Password
     ```
-    kubectl create secret generic mysql-pass –from-literal=password=YOUR_PASSWORD
+    kubectl create secret generic mysql-pass --from-literal=password=YOUR_PASSWORD
     ```
     Replace YOUR_PASSWORD with the password you want to apply.
 
@@ -19,9 +19,9 @@
     kubectl get secrets
     ```
 
-1. Create empty `mysql.yml` file. 
+1. Create empty `mysql.yaml` file. 
 
-1. Add Persistent Volume Claim definition to `mysql .yml`
+1. Add Persistent Volume Claim definition to `mysql.yaml`
     ```
     apiVersion: v1
     kind: PersistentVolumeClaim
@@ -37,7 +37,7 @@
           storage: 20Gi
     ```
  
-1. Add mysql deployment definition to `mysql.yml
+1. Add mysql deployment definition to `mysql.yaml
     ```
     ---
     apiVersion: apps/v1 # for versions before 1.9.0 use apps/v1beta2
@@ -81,7 +81,7 @@
     ```` 
     Pay attension to `volumes`, `volumeMounts` and `env` fields.
 
-1. Add service definition to `mysql.yml`
+1. Add service definition to `mysql.yaml`
     ```
     ---
     apiVersion: v1
@@ -115,7 +115,7 @@
     kubectl get pods
     ```
 
-1. Create `wordpress.yml` file with the following content
+1. Create `wordpress.yaml` file with the following content
     ```
     apiVersion: v1
     kind: Service
@@ -185,7 +185,7 @@
             persistentVolumeClaim:
               claimName: wp-pv-claim
     ```
-    Pay attension to wordpress service definition, it uses LoadBalancer type, because it need to be accessible from the outside. All other details are very similar to `mysql.yml`
+    Pay attension to wordpress service definition, it uses LoadBalancer type, because it need to be accessible from the outside. All other details are very similar to `mysql.yaml`
 
 1. Deploy wordpress
     ```
@@ -204,11 +204,11 @@
 1. Delete wordpress persistent volume claim. 
 1. Manually create persistent disk in GCE. (Compute engine -> Disks -> Create disk, use `source type = none` to create an empty disk) or use the following command
     ```
-    gcloud compute disks create --size=500GB --zone=us-central1-a my-data-disk
+    gcloud compute disks create --size=500GB --zone=us-west1-b my-data-disk
     ```
 1. Change wordpress deployment to use your persistent disk instead of persistent volume claim. Find `gcePersistentDisk` section in [this](https://kubernetes.io/docs/concepts/storage/volumes/) document for reference.
 
-### Exercise 3 (Optional): Deploying WordPress and MySQL with Persistent Volumes
+### Exercise 3 (Optional): Observe how persistent volume is reatacched 
 
 1. Open wordpress, enter some data.
 1. Exec inside mysql pod and kill mysql process.

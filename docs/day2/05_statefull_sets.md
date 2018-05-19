@@ -7,6 +7,7 @@ Like a Deployment, a StatefulSet manages Pods that are based on an identical con
 ### Exercise 1: Deploying Cassandra with Stateful Sets
 
 1. Create a Cassandra Headless Service
+
     Save the following file as `cassandra-service.yaml`
     ```
     apiVersion: v1
