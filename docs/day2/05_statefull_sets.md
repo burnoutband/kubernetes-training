@@ -16,16 +16,25 @@ Like a Deployment, a StatefulSet manages Pods that are based on an identical con
       labels:
         app: cassandra
       name: cassandra
+      annotations:
+        service.alpha.kubernetes.io/tolerate-unready-endpoints: "true"
     spec:
       clusterIP: None
+      publishNotReadyAddresses: true
       ports:
       - port: 9042
       selector:
         app: cassandra
     ```
-    This Service is used for DNS lookups between Cassandra Pods and clients within the Kubernetes Cluster.
+    This Service is used for DNS lookups between Cassandra Pods and clients within the Kubernetes Cluster. Pay attension to `service.alpha.kubernetes.io/tolerate-unready-endpoints: "true"` field - without it the first pod will not be exposed untill its readiness probe completes.
+
+1. Deploy the service
+    ```
+    kubectl create -f cassandra-service.yaml
+    ```
 
 1. Use a StatefulSet to Create a Cassandra Ring
+
     Save the following file as `cassandra-statefulset.yaml`
     ```
     apiVersion: apps/v1
@@ -114,7 +123,7 @@ Like a Deployment, a StatefulSet manages Pods that are based on an identical con
             requests:
               storage: 1Gi
     ```
-    Pay attension to CASSANDRA_SEEDS environment variable - nodes use it to discover each other. Make sure you understand how this variable is related to casandra service.
+    Pay attension to CASSANDRA_SEEDS environment variable - nodes use it to discover each other. Make sure you understand how this variable is related to casandra service. Also take a look at `readinessProbe` - it might delay container start.
 
 1. Deploy casandra statefull set 
     ```
@@ -123,7 +132,7 @@ Like a Deployment, a StatefulSet manages Pods that are based on an identical con
 
 1. Get the Pods to see the ordered creation status:
     ```
-    kubectl get pods -l=“app=cassandra”
+    kubectl get pods -l="app=cassandra"
     ```
     The response should be
     ```
@@ -132,13 +141,19 @@ Like a Deployment, a StatefulSet manages Pods that are based on an identical con
        cassandra-1   0/1       ContainerCreating   0          8s
     ```
 
-1. Validate The Cassandra StatefulSet
-    ```
-    kubectl get statefulset cassandra
-    ```
-
 1. Run the Cassandra utility nodetool to display the status of the ring.
     ```
-    kubectl exec cassandra-0 – nodetool status
+    kubectl exec cassandra-0 -- nodetool status
     ```
+    The response is
+    ```
+       Datacenter: DC1-K8Demo
+       ======================
+       Status=Up/Down
+       |/ State=Normal/Leaving/Joining/Moving
+       --  Address     Load       Tokens       Owns (effective)  Host ID                               Rack
+       UN  172.17.0.5  83.57 KiB  32           74.0%             e2dd09e6-d9d3-477e-96c5-45094c08db0f  Rack1-K8Demo
+       UN  172.17.0.4  101.04 KiB  32           58.8%             f89d6835-3a42-4419-92b3-0e62cae1479c  Rack1-K8Demo
+       UN  172.17.0.6  84.74 KiB  32           67.1%             a6a1e8c2-3dc5-4417-b1a0-26507af2aaad  Rack1-K8Demo
+    ```  
 
