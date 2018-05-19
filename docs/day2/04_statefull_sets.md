@@ -157,3 +157,6 @@ Like a Deployment, a StatefulSet manages Pods that are based on an identical con
        UN  172.17.0.6  84.74 KiB  32           67.1%             a6a1e8c2-3dc5-4417-b1a0-26507af2aaad  Rack1-K8Demo
     ```  
 
+### Exercise 2 (Optional): Scale
+
+1. Scale cassandra cluster up and down. Observe in what order kubernetes deploys/deletes pods. 
