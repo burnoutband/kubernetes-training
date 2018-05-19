@@ -72,3 +72,11 @@ Objects of type secret are intended to hold sensitive information, such as passw
     # cat /tmp/pass/password.txt
     Ood7ooch8a
     ```
+
+### Exercise 2 (Optional): Access secrets from environment variables
+
+1. Redeploy `secretpod` pod but expose secret not by using volumeMount but instead use invironment variables. Find `Using secrets as Environment Variables` in [this](https://kubernetes.io/docs/concepts/configuration/secret/#using-secrets) document for reference.
+1. Navigate into the container and ensure that you can access the secret from Environment Variables.
+
+### Exercise 3 (Optional): Use config maps 
+1. Convert the secret from the previous execise to ConfigMap. Use [official documentation](https://kubernetes.io/docs/tasks/configure-pod-container/configure-pod-configmap/) for reference.
