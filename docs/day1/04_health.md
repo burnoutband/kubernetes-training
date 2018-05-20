@@ -3,7 +3,8 @@
 ### Exercise 1: Deploy a pod with a health check 
 
 1. Create a pod that exposes an endpoint /health, responding with an HTTP 200 status code
-    Save the following file as `hc.yml`
+    
+   Save the following file as `hc.yml`
     ```
     apiVersion: v1
     kind: Pod
@@ -122,4 +123,5 @@
 
 ### Exercise 4 (Optional): Create health check using TCP sockets
 
-1. Deploy a pod but use a TCP socket instead of HTTP GET [link](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.10/#handler-v1-core)
+1. Modify `hc.yml` to use a TCP socket handler instead of HTTP GET handler [link](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.10/#handler-v1-core)
+1. Deploy the pod and see if the pod is considered healthy.
