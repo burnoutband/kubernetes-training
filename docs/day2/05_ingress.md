@@ -6,7 +6,7 @@ Ingress can provide load balancing, SSL termination and name-based virtual hosti
 
 ### Exercise 1: Deploy sample app using ingress 
 
-1. Deploy NGINX ingress controller
+1. Deploy nginx ingress controller
     ```
     kubectl create -f https://raw.githubusercontent.com/kubernetes/kops/master/addons/ingress-nginx/v1.6.0-gce.yaml
     ```
