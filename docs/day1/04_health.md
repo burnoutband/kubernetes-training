@@ -4,7 +4,7 @@
 
 1. Create a pod that exposes an endpoint /health, responding with an HTTP 200 status code
     
-   Save the following file as `hc.yml`
+   Save the following file as `hc.yaml`
     ```
     apiVersion: v1
     kind: Pod
@@ -27,7 +27,7 @@
 
 1. Deploy the pod
     ```
-    kubectl create -f hc.yml
+    kubectl create -f hc.yaml
     ```
 
 1. Describe the pod; it should be considered healthy
@@ -36,7 +36,7 @@
     ```
 
 1. Now we launch a bad pod, that is, a pod that has a container that randomly (in the time range 1 to 4 sec) does not return a 200 code
-    Save the following file as `bad-hc.yml`
+    Save the following file as `bad-hc.yaml`
     ```
     apiVersion: v1
     kind: Pod
@@ -63,7 +63,7 @@
 
 1. Deploy the pod
     ```
-    kubectl create -f bad-hc.yml
+    kubectl create -f bad-hc.yaml
     ```
 
 1. Check events at the bad pod
@@ -80,7 +80,7 @@
 
 ### Exercise 2: Use readiness probe 
 
-1. Create a pod `readiness.yml` with a readinessProbe that kicks in after 10 seconds
+1. Create a pod `readiness.yaml` with a readinessProbe that kicks in after 10 seconds
     ```
     apiVersion: v1
     kind: Pod
@@ -101,7 +101,7 @@
 
 1. Deploy the pod
     ```
-    kubectl create -f readiness.yml
+    kubectl create -f readiness.yaml
     ```
 
 1. Looking at the events of the pod. 
@@ -123,5 +123,5 @@
 
 ### Exercise 4 (Optional): Create health check using TCP sockets
 
-1. Modify `hc.yml` to use a TCP socket handler instead of HTTP GET handler [link](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.10/#handler-v1-core)
+1. Modify `hc.yaml` to use a TCP socket handler instead of HTTP GET handler [link](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.10/#handler-v1-core)
 1. Deploy the pod and see if the pod is considered healthy.
