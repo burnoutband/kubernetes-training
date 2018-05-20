@@ -22,7 +22,7 @@
             path: /health
             port: 9876
     ```
-    Pay atension to `livenessProbe` section.
+    Pay attention to `livenessProbe` section.
 
 1. Deploy the pod
     ```
@@ -40,7 +40,7 @@
     apiVersion: v1
     kind: Pod
     metadata:
-      name: badpod
+      name: bad-hc
     spec:
       containers:
       - name: simpleservice
@@ -65,11 +65,17 @@
     kubectl create -f bad-hc.yml
     ```
 
-1. check events at the bad pod
+1. Check events at the bad pod
     ```
-    kubectl describe pod badpod
+    kubectl describe pod bad-hc
     ```
     You should see that bad pod was restarted several times.
+
+1. Delete the pods
+    ```
+    kubectl delete pod hc bad-hc
+    ```    
+
 
 ### Exercise 2: Use readiness probe 
 
@@ -78,7 +84,7 @@
     apiVersion: v1
     kind: Pod
     metadata:
-      name: ready
+      name: readiness
     spec:
       containers:
       - name: simpleservice
@@ -99,9 +105,14 @@
 
 1. Looking at the events of the pod. 
     You should see that, eventually, the pod is ready to serve traffic
-```
-kubectl describe pod ready
-```
+    ```
+    kubectl describe pod readiness
+    ```
+
+1. Delete the pod
+    ```
+    kubectl delete pod readiness
+    ``` 
 
 ### Exercise 3 (Optional): Create health check for nginx pod 
 
