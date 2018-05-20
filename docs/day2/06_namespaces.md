@@ -1,4 +1,4 @@
-## Namespaces
+## Namespaces and RBAC
 
 Namespaces provide for a scope of Kubernetes objects. You can think of it as a workspace you're sharing with other users. Many objects such as pods and services are namespaced, while some (like nodes) are not.
 
@@ -28,7 +28,7 @@ Namespaces provide for a scope of Kubernetes objects. You can think of it as a w
     kubectl create -f ns.yaml
     ```
 
-1. Deploy a pod into new namespace
+1. Deploy a pod into the new namespace
 
     Save the following file as `pod.yaml`
     ```
@@ -56,7 +56,7 @@ Namespaces provide for a scope of Kubernetes objects. You can think of it as a w
 
 ### Exercise 2: Use RBAC 
 
-Usually kubernetes is integrated with an identity provider, such as LDAP. In this exercise, however, we are going to manually create a service account and assign role to it to demonstrate how to use roles in kubernetes. 
+Usually, kubernetes is integrated with an identity provider, such as LDAP. In this exercise, however, we are going to manually create a service account and assign a role to it to demonstrate how to use roles in kubernetes. 
 
 1. Create user credentials. 
 
@@ -75,14 +75,14 @@ Usually kubernetes is integrated with an identity provider, such as LDAP. In thi
     * Copy your Kubernetes cluster certificate authority (CA).
 
         ```
-        gsutil cp gs://$KOPS_STATE_STORE/simple.k8s.local/pki/private/ca/$KEY.key ca.key
-        gsutil cp gs://$KOPS_STATE_STORE/simple.k8s.local/pki/issued/ca/$CERT.crt ca.crt
+        gsutil cp gs://$KOPS_STATE_STORE/simple.k8s.local/pki/private/ca/*.key ca.key
+        gsutil cp gs://$KOPS_STATE_STORE/simple.k8s.local/pki/issued/ca/*.crt ca.crt
         ```
         Note, that `KOPS_STATE_STORE` environment variable should be set to kops state store. 
 
     * Generate the final certificate employee.crt by approving the certificate sign request, employee.csr, you made earlier
         ```
-        penssl x509 -req -in employee.csr -CA ca.crt -CAkey ca.key -CAcreateserial -out employee.crt -days 500
+        openssl x509 -req -in employee.csr -CA ca.crt -CAkey ca.key -CAcreateserial -out employee.crt -days 500
         ```
     * Add a new context with the new credentials for your Kubernetes cluster.
 
@@ -101,14 +101,14 @@ Usually kubernetes is integrated with an identity provider, such as LDAP. In thi
     * Create a role-deployment-manager.yaml file with the content below
         ```
         kind: Role
-          apiVersion: rbac.authorization.k8s.io/v1beta1
-          metadata:
-            namespace: test
-            name: deployment-manager
-          rules:
-          - apiGroups: ["", "extensions", "apps"]
-            resources: ["deployments", "replicasets", "pods"]
-            verbs: ["get", "list", "watch", "create", "update", "patch", "delete"] # You can also use ["*"]
+        apiVersion: rbac.authorization.k8s.io/v1beta1
+        metadata:
+          namespace: test
+          name: deployment-manager
+        rules:
+        - apiGroups: ["", "extensions", "apps"]
+          resources: ["deployments", "replicasets", "pods"]
+          verbs: ["get", "list", "watch", "create", "update", "patch", "delete"] # You can also use ["*"]
         ```
 
     * Create the Role in the cluster
@@ -151,3 +151,8 @@ Usually kubernetes is integrated with an identity provider, such as LDAP. In thi
         ```
         kubectl --context=employee-context get pods --namespace=default
         ```
+
+### Exercise 3 (Optional): Namespace resource limits 
+
+1. Namespaces are commonly used with [resource quotas](https://kubernetes.io/docs/concepts/policy/resource-quotas/). Assign some quota to the test namespace and then try to use more resources then quota allows. See the previous link for more information how to work with quotas.
+

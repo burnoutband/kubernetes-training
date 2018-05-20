@@ -94,6 +94,7 @@ A deployment is a supervisor for pods and replica sets, giving you fine-grained 
 ### Exercise 2 (Optional): Observe how kubernetes restarts containers 
 
 1. Use simpleservice deployment.
-1. Navigate into the container, find and kill web server process.
+1. Exec into the container, find and kill web server process.
 1. Observe whether kubernetes tries to redeploy container.
+
 

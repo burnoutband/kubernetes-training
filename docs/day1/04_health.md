@@ -2,7 +2,7 @@
 
 ### Exercise 1: Deploy a pod with a health check 
 
-1. Create a pod that exposes an endpoint /health, responding with a HTTP 200 status code
+1. Create a pod that exposes an endpoint /health, responding with an HTTP 200 status code
     Save the following file as `pod.yml`
     ```
     apiVersion: v1
@@ -29,7 +29,7 @@
     kubectl create -f pod.yaml
     ```
 
-1. Describe the pod, it should be considered healthy
+1. Describe the pod; it should be considered healthy
     ```
     kubectl describe pod hc
     ```
@@ -105,6 +105,7 @@ kubectl describe pod ready
 
 ### Exercise 2 (Optional): Create health check for nginx pod 
 
-1. Deploy a pod that runs nginx and uses port 80 and root path for healthcheck. Ensure that pod is healthy.
-1. Change healthcheck configuration to make pod unhealthy.
+1. Deploy a pod that runs nginx and uses port 80 and root path for the health check. Ensure that pod is healthy.
+1. Change health check configuration to make pod unhealthy.
 1. Observe whether kubernetes tries to restart the unhealthy pod.
+

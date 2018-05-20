@@ -4,12 +4,12 @@ Objects of type secret are intended to hold sensitive information, such as passw
 
 ### Exercise 1: Storing secrets in k8s
 
-1. Create file with secrets in Cloud Shell 
+1. Create a file with secrets in Cloud Shell 
     ```
     $ echo -n 'Ood7ooch8a' > ./password.txt
     ```
 
-1. Create secret in k8s from file
+1. Create a secret in k8s from file
     ```
     $ kubectl create secret generic password --from-file=./password.txt
     secret "password" created
@@ -37,7 +37,7 @@ Objects of type secret are intended to hold sensitive information, such as passw
     password.txt:  10 bytes
     ```
 
-1. Create pod with attached secret password file
+1. Create a pod with attached secret password file
     ```
     $ kubectl create -f pod.yml
     ```
@@ -75,8 +75,9 @@ Objects of type secret are intended to hold sensitive information, such as passw
 
 ### Exercise 2 (Optional): Access secrets from environment variables
 
-1. Redeploy `secretpod` pod but expose secret not by using volumeMount but instead use invironment variables. Find `Using secrets as Environment Variables` in [this](https://kubernetes.io/docs/concepts/configuration/secret/#using-secrets) document for reference.
-1. Navigate into the container and ensure that you can access the secret from Environment Variables.
+1. Redeploy `secretpod` pod but expose secret not by using volumeMount but instead use environment variables. Find `Using secrets as Environment Variables` in [this](https://kubernetes.io/docs/concepts/configuration/secret/#using-secrets) document for reference.
+1. Exec into the container and ensure that you can access the secret from Environment Variables.
 
 ### Exercise 3 (Optional): Use config maps 
-1. Convert the secret from the previous execise to ConfigMap. Use [official documentation](https://kubernetes.io/docs/tasks/configure-pod-container/configure-pod-configmap/) for reference.
+1. Convert the secret from the previous exercise to ConfigMap. Use [official documentation](https://kubernetes.io/docs/tasks/configure-pod-container/configure-pod-configmap/) for reference.
+

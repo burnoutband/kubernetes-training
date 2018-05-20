@@ -14,7 +14,7 @@
 
 1. Login and select the assigned project or create a new one from the top menu.
 
-1. Enable (if not aleady) the Compute Engine API here [GCP Console](https://console.cloud.google.com/apis/api/compute.googleapis.com/)
+1. Enable (if not already) the Compute Engine API here [GCP Console](https://console.cloud.google.com/apis/api/compute.googleapis.com/)
 
 1. Launch the Google Cloud Shell from the top right menu.
 
@@ -101,7 +101,7 @@
 
 ### Exercise 2 (Optional): Identify resources that have been created
 
-1. In GCE Cloud Console find and investigate the following resources, that have beed created as a result of previous exercises
+1. In GCE Cloud Console find and investigate the following resources, that have been created as a result of previous exercises
     * Compute Engine -> VM instances
     * Compute Engine -> Disks
     * Compute Engine -> Instance groups 
@@ -111,3 +111,4 @@
     * Network services -> Load balancing
     We will examine all created infrastructure in details on day 3.
   
+

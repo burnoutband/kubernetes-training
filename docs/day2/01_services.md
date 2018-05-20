@@ -68,7 +68,7 @@ Keeping the mapping between the VIP and the pods up-to-date is the job of kube-p
         role: master
         tier: backend
     ```
-    Pay attension to `selector` and `ports` fields. Make sure you understand how service is connected to deployment. 
+    Pay attention to `selector` and `ports` fields. Make sure you understand how service is connected to deployment. 
 
 1. Deploy the service.
     ```
@@ -217,16 +217,17 @@ Keeping the mapping between the VIP and the pods up-to-date is the job of kube-p
 
 ### Exercise 2 (Optional): Investigate source code of the sample
 
-1. Source code of the sample can be found [here](https://github.com/kubernetes/examples/tree/master/guestbook) 
+1. The source code of the previously deployed sample can be found [here](https://github.com/kubernetes/examples/tree/master/guestbook) 
 1. The files we are interested in:
     * Redis slave Dockerfile: [link](https://github.com/kubernetes/examples/blob/master/guestbook/redis-slave/Dockerfile)
     * Redis slave startup script: [link](https://github.com/kubernetes/examples/blob/master/guestbook/redis-slave/run.sh)
     * PHP application: [link](https://github.com/kubernetes/examples/blob/master/guestbook/php-redis/guestbook.php)
 1. Make sure you understand the following:
-    * How redis slave connects to redis master? What address it is using?
+    * How redis slave connects to redis master? What address is it using?
     * How php app connects to both redis master and redis slave?
 
 ### Exercise 4 (Optional): Manually connect to redis from app pod 
 
 1. Go inside any frontend pods. Use `redis-tools` package to install [redis-cli](https://redis.io/topics/rediscli) Use `redis-cli` to connect to redis master.
+
 

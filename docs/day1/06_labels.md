@@ -115,7 +115,7 @@ We can use labels for filtering a list.
 
 ---
 
-Note: Labels are not restricted to pods. In fact you can apply them to all sorts of objects, such as nodes or services.
+Note: Labels are not restricted to pods. In fact, you can apply them to all sorts of objects, such as nodes or services.
 
 ---
 
@@ -126,3 +126,4 @@ Note: Labels are not restricted to pods. In fact you can apply them to all sorts
 1. List the pods using selectors that will return all pods with versions not equal to 3
 
 Refer to the [documentation](https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/#label-selectors) to review selector syntax.
+

@@ -185,9 +185,9 @@
             persistentVolumeClaim:
               claimName: wp-pv-claim
     ```
-    Pay attension to wordpress service definition, it uses LoadBalancer type, because it need to be accessible from the outside. All other details are very similar to `mysql.yaml`
+    Pay attention to wordpress service definition, it uses LoadBalancer type, because it needs to be accessible from the outside. All other details are very similar to `mysql.yaml`
 
-1. Deploy wordpress
+1. Deploy the wordpress
     ```
     kubectl create -f wordpress.yaml
     ```
@@ -202,15 +202,16 @@
 ### Exercise 2 (Optional): Static persistent volume provisioning 
 
 1. Delete wordpress persistent volume claim. 
-1. Manually create persistent disk in GCE. (Compute engine -> Disks -> Create disk, use `source type = none` to create an empty disk) or use the following command
+1. Manually create a persistent disk in GCE. (Compute engine -> Disks -> Create disk, use `source type = none` to create an empty disk) or use the following command
     ```
     gcloud compute disks create --size=500GB --zone=us-west1-b my-data-disk
     ```
 1. Change wordpress deployment to use your persistent disk instead of persistent volume claim. Find `gcePersistentDisk` section in [this](https://kubernetes.io/docs/concepts/storage/volumes/) document for reference.
 
-### Exercise 3 (Optional): Observe how persistent volume is reatacched 
+### Exercise 3 (Optional): Observe how persistent volume is reattached 
 
 1. Open wordpress, enter some data.
 1. Exec inside mysql pod and kill mysql process.
 1. Wait for kubernetes to restart the pod.
 1. Make sure that persistend data isn't lost.
+

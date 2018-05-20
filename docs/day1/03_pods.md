@@ -9,7 +9,7 @@ A pod is a collection of containers sharing a network and mount namespace and is
     kubectl run simpleservice --image=mhausenblas/simpleservice:0.5.0 --port=9876
     ```
 
-1. List pods and ensure that out pod is running. Copy pod name.
+1. List pods and ensure that out pod is running and copy pod name.
     ```
     kubectl get pods
     ```
@@ -88,4 +88,5 @@ A pod is a collection of containers sharing a network and mount namespace and is
 
 1. Set [resources](https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/) property to limit how much memory and CPU the pod can use.
 1. Use [stress](https://linux.die.net/man/1/stress) to load the container, see what happens.
+
 

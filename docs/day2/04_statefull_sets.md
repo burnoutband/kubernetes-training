@@ -20,7 +20,6 @@ Like a Deployment, a StatefulSet manages Pods that are based on an identical con
         service.alpha.kubernetes.io/tolerate-unready-endpoints: "true"
     spec:
       clusterIP: None
-      publishNotReadyAddresses: true
       ports:
       - port: 9042
       selector:
