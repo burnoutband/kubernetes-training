@@ -60,6 +60,12 @@ Putting this information in a secret is safer and more flexible than putting it 
     ```
     cat /tmp/pass/password.txt
     ```
+    
+1. Delete the pod and secret
+    ```
+    kubectl delete pod secretpod
+    kubectl delete secret password
+    ```
 
 ### Exercise 2 (Optional): Access secrets from environment variables
 
