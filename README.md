@@ -11,6 +11,6 @@
     1. [Services](docs/day2/01_services.md)
     1. [Secrets and ConfigMaps](docs/day2/02_secrets_and_config_maps.md)
     1. [Volumes and Data](docs/day2/03_volumes.md)
-    1. [Stateful Sets](docs/day2/04_statefull_sets.md)
+    1. [Stateful Sets](docs/day2/04_stateful_sets.md)
     1. [Ingress](docs/day2/05_ingress.md)
     1. [Namespaces and RBAC](docs/day2/06_namespaces.md)
