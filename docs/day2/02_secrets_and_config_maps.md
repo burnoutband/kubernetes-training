@@ -63,7 +63,7 @@ Putting this information in a secret is safer and more flexible than putting it 
 
 ### Exercise 2 (Optional): Access secrets from environment variables
 
-1. Deploy `secretpod` pod but expose secret not by using `volumeMount` but instead use environment variables. Use [official documentation](https://kubernetes.io/docs/concepts/configuration/secret/#using-secrets-as-environment-variables) for reference. 
+1. Deploy`secretpod` but expose secret using an environment variables instead of using `volumeMount`. Use [official documentation](https://kubernetes.io/docs/concepts/configuration/secret/#using-secrets-as-environment-variables) for reference. 
 1. Exec into the container and ensure that you can access the secret from an environment variable.
 
 ### Exercise 3 (Optional): Use config maps 
