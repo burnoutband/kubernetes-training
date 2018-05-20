@@ -1,4 +1,4 @@
-## Secrets
+## Secrets and ConfigMaps
 
 Objects of type secret are intended to hold sensitive information, such as passwords, OAuth tokens, and ssh keys. Putting this information in a secret is safer and more flexible than putting it verbatim in a pod definition or in a docker image
 
