@@ -84,7 +84,7 @@ A pod is a collection of containers sharing a network and mount namespace and is
 
 ### Exercise 3 (Optional): Deploy a pod from custom image.
 
-1. Push `nginx` image, created in the docker part of the course, to dockerhub. [link](https://ropenscilabs.github.io/r-docker-tutorial/04-Dockerhub.html)
+1. Push `nginx` image, created in the docker part of the course, to dockerhub. [Reference link](https://ropenscilabs.github.io/r-docker-tutorial/04-Dockerhub.html)
 1. Run a pod using this image.
 
 ### Exercise 4 (Optional): Limit pod resources
