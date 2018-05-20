@@ -39,6 +39,8 @@
    mkdir -p $HOME/bin && cp kops-linux-amd64 "$_/kops"
 
    PATH="$HOME/bin:$PATH"
+
+   echo 'PATH="$HOME/bin:$PATH"' >> ~/.bashrc 
    ```
 
 1. Create a state store
@@ -75,6 +77,8 @@
 
    ```console
    export KOPS_STATE_STORE=gs://kubernetes-<unique value>/
+
+   echo 'export KOPS_STATE_STORE=gs://kubernetes-<unique value>/' >> ~/.bashrc
    ```
 
 1. Building the cluster in GCE
