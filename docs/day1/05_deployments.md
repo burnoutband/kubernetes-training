@@ -49,7 +49,7 @@ A deployment is a supervisor for pods and replica sets, giving you fine-grained 
     ``` 
     Make sure that simpleservice returns version `0.9`
 
-1. Update `deployment.yml` and set `SIMPLE_SERVICE_VERSION` to `1.0`
+1. Update `deployment.yml` and set `SIMPLE_SERVICE_VERSION` to `1.0`.
 
 1. Apply changes.
     ```
@@ -57,7 +57,7 @@ A deployment is a supervisor for pods and replica sets, giving you fine-grained 
     ``` 
 1. Run 
     ```
-    kubect get pods
+    kubectl get pods
     ```
     What we now see is the rollout of two new pods with the updated version 1.0 as well as the two old pods with version 0.9 being terminated.
     ```
@@ -93,8 +93,8 @@ A deployment is a supervisor for pods and replica sets, giving you fine-grained 
 
 ### Exercise 2 (Optional): Observe how kubernetes restarts containers 
 
-1. Use simpleservice deployment.
-1. Exec into the container, find and kill web server process.
-1. Observe whether kubernetes tries to redeploy container.
+1. Use the simpleservice deployment
+1. Exec into the container, find and kill web server process
+1. Observe whether kubernetes tries to redeploy container
 
 
