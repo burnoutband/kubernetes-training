@@ -19,7 +19,10 @@ A pod is a collection of containers sharing a network and mount namespace and is
     kubectl describe pod <pod-name>
     ```
 
-1. From GCP console VM instances tab ssh to any of the nodes, either worker or master. (GCP allows you to ssh using web browser just by clicking on SSH button) This step is required because by default pod network is not open to outside world.
+1. From GCP console VM instances tab ssh to any of the nodes, either worker or master. (GCP allows you to ssh using web browser just by clicking on SSH button or with a new Cloud Shell session) This step is required because by default pod network is not open to outside world.
+    ```
+    gcloud compute --project "$DEVSHELL_PROJECT_ID" ssh --zone "us-west1-c" "<vm-instance-name>"
+    ```
 
 1. Connect to the pod.
     ```
