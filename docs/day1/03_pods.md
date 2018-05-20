@@ -41,7 +41,7 @@ A pod is a collection of containers sharing a network and mount namespace and is
 
 ### Exercise 2: Launch a pod using the configuration file
 
-1. Save the following file as `pod.yml`
+1. Save the following file as `pod.yaml`
     ```console
     apiVersion: v1
     kind: Pod
@@ -62,9 +62,9 @@ A pod is a collection of containers sharing a network and mount namespace and is
     ```
     Here we specify that our new pod should contain 2 containers. The first one runs the same application as previously. The second one runs sleep command. 
 
-1. Create a pod from `pod.yml` configuration file.
+1. Create a pod from `pod.yaml` configuration file.
     ```
-    kubectl create -f pod.yml
+    kubectl create -f pod.yaml
     ```
 
 1. Navigate inside the second container.
