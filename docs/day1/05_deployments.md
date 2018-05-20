@@ -90,11 +90,15 @@ A deployment is a supervisor for pods and replica sets, giving you fine-grained 
     ```
     At this point in time we're back at where we started, with two new pods serving again version 0.9.
 
-
 ### Exercise 2 (Optional): Observe how kubernetes restarts containers 
 
 1. Use the simpleservice deployment
 1. Exec into the container, find and kill web server process
 1. Observe whether kubernetes tries to redeploy container
 
+### Clean-up 
 
+1. Delete the deployment.
+    ```
+    kubectl delete deployment simpleservice
+    ```
