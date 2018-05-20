@@ -6,7 +6,7 @@ A label is a key-value pair that is meaningful and relevant to users with certai
 
 ### Exercise 1: Labels in pods
 
-1. Save the following as `label-pod.yml`
+1. Save the following as `label-pod.yaml`
 
     ```console
     apiVersion: v1
@@ -26,7 +26,7 @@ A label is a key-value pair that is meaningful and relevant to users with certai
 1. Run the following command to create the pod
 
     ```console
-    kubectl create -f label-pod.yml
+    kubectl create -f label-pod.yaml
     ```
 
 1. Run the following to list the pod, noting the new column
@@ -73,7 +73,7 @@ We can use labels for filtering a list.
     label-pod  1/1       Running   0          27m
     ```
 
-1. Save the following as `label-pod2.yml`
+1. Save the following as `label-pod2.yaml`
 
     ```console
     apiVersion: v1
@@ -94,7 +94,7 @@ We can use labels for filtering a list.
 1. Create the above pod using
 
     ```console
-    kubectl create -f label-pod2.yml
+    kubectl create -f label-pod2.yaml
     ```
 
 1. To list all pods labeled with `env=development` or `env=production`
