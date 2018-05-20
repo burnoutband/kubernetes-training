@@ -161,3 +161,10 @@ Ingress can provide load balancing, SSL termination and name-based virtual hosti
 1. Create two secrets for `app1`  and `app2`. Each secret should contain the corresponding certificate and private key.
 1. Add a `tls` section to the ingress definition. You can use the `tls` section from [this](https://kubernetes.io/docs/concepts/services-networking/ingress/#types-of-ingress) document for reference.
 1. Redeploy, open each app in a web browser and examine certificate details. Make sure that each app now uses its own certificates. Use [this](https://www.ssl2buy.com/wiki/how-to-view-ssl-certificate-details-on-chrome-56) link to see how a certificate can be viewed in chrome.
+
+### Cleanup
+
+1. Delete everything (two apps, two services and one ingress)
+    ```
+    kubectl delete -f ingress-sample-apps.yaml
+    ```
