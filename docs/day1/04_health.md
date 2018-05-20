@@ -109,3 +109,6 @@ kubectl describe pod ready
 1. Change health check configuration to make pod unhealthy.
 1. Observe whether kubernetes tries to restart the unhealthy pod.
 
+### Exercise 4 (Optional): Create health check using TCP sockets
+
+1. Deploy a pod but use a TCP socket instead of HTTP GET [link](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.10/#handler-v1-core)
