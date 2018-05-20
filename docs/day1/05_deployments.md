@@ -4,7 +4,7 @@ A deployment is a supervisor for pods and replica sets, giving you fine-grained 
 
 ### Exercise 1: Create a deployment 
 
-1. Save the following file as `deployment.yml`.
+1. Save the following file as `deployment.yaml`.
     ```console
     apiVersion: apps/v1
     kind: Deployment
@@ -32,7 +32,7 @@ A deployment is a supervisor for pods and replica sets, giving you fine-grained 
 
 1. Create deployment.
     ```
-    kubectl create -f deployment.yml
+    kubectl create -f deployment.yaml
     ```
 
 1. Check deployment, replica set and pods, created by the previous command.
@@ -49,11 +49,11 @@ A deployment is a supervisor for pods and replica sets, giving you fine-grained 
     ``` 
     Make sure that simpleservice returns version `0.9`
 
-1. Update `deployment.yml` and set `SIMPLE_SERVICE_VERSION` to `1.0`.
+1. Update `deployment.yaml` and set `SIMPLE_SERVICE_VERSION` to `1.0`.
 
 1. Apply changes.
     ```
-    kubectl apply -f deployment.yml
+    kubectl apply -f deployment.yaml
     ``` 
 1. Run 
     ```
