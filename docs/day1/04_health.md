@@ -123,5 +123,5 @@
 
 ### Exercise 4 (Optional): Create health check using TCP sockets
 
-1. Modify `hc.yaml` to use a TCP socket handler instead of HTTP GET handler [link](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.10/#handler-v1-core)
+1. Modify `hc.yaml` to use a TCP socket handler instead of HTTP GET handler. [Reference link](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.10/#handler-v1-core)
 1. Deploy the pod and see if the pod is considered healthy.
