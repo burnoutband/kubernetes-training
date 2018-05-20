@@ -1,18 +1,18 @@
 ## Labels and Selectors
 
-Labels are the mechanism you use to organize Kubernetes objects. A label is a key-value
-pair with certain [restrictions](https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/#syntax-and-character-set)
-concerning length and allowed values but without any pre-defined meaning.
+Labels are the mechanism you use to organize Kubernetes objects. 
+
+A label is a key-value pair that is meaningful and relevant to users with certain [restrictions](https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/#syntax-and-character-set) concerning length and allowed values.
 
 ### Exercise 1: Labels in pods
 
-1. Save the following as `label-pod.yaml`
+1. Save the following as `label-pod.yml`
 
     ```console
     apiVersion: v1
     kind: Pod
     metadata:
-      name: labelex
+      name: label-pod
       labels:
         env: development
     spec:
@@ -26,27 +26,27 @@ concerning length and allowed values but without any pre-defined meaning.
 1. Run the following command to create the pod
 
     ```console
-    kubectl create -f label-pod.yaml
+    kubectl create -f label-pod.yml
     ```
 
-1. Run the following to list the pod noting the new column
+1. Run the following to list the pod, noting the new column
 
     ```console
     kubectl get pods --show-labels
 
     NAME       READY     STATUS    RESTARTS   AGE    LABELS
-    labelex    1/1       Running   0          10m    env=development
+    label-pod  1/1       Running   0          10m    env=development
     ```
 
 1. Add an additional label to the pod by running
 
     ```console
-    kubectl label pods labelex owner=you
+    kubectl label pods label-pod owner=you
 
     kubectl get pods --show-labels
 
     NAME        READY     STATUS    RESTARTS   AGE    LABELS
-    labelex     1/1       Running   0          16m    env=development,owner=you
+    label-pod   1/1       Running   0          16m    env=development,owner=you
     ```
 
 ### Exercise 2: Using Selectors
@@ -58,8 +58,8 @@ We can use labels for filtering a list.
     ```console
     kubectl get pods --selector owner=you
 
-    NAME      READY     STATUS    RESTARTS   AGE
-    labelex   1/1       Running   0          27m
+    NAME       READY     STATUS    RESTARTS   AGE
+    label-pod  1/1       Running   0          27m
     ```
 
     >Note: The `--selector` option can be abbreviated to `-l`
@@ -69,17 +69,17 @@ We can use labels for filtering a list.
     ```console
     kubectl get pods -l env=development
 
-    NAME      READY     STATUS    RESTARTS   AGE
-    labelex   1/1       Running   0          27m
+    NAME       READY     STATUS    RESTARTS   AGE
+    label-pod  1/1       Running   0          27m
     ```
 
-1. Save the following as `label-pod2.yaml`
+1. Save the following as `label-pod2.yml`
 
     ```console
     apiVersion: v1
     kind: Pod
     metadata:
-      name: labelexother
+      name: label-pod2
       labels:
         env: production
         owner: you
@@ -94,7 +94,7 @@ We can use labels for filtering a list.
 1. Create the above pod using
 
     ```console
-    kubectl create -f label-pod2.yaml
+    kubectl create -f label-pod2.yml
     ```
 
 1. To list all pods labeled with `env=development` or `env=production`
@@ -103,8 +103,8 @@ We can use labels for filtering a list.
     kubectl get pods -l 'env in (production, development)'
 
     NAME           READY     STATUS    RESTARTS   AGE
-    labelex        1/1       Running   0          43m
-    labelexother   1/1       Running   0          3m
+    label-pod      1/1       Running   0          43m
+    label-pod2     1/1       Running   0          3m
     ```
 
 1. Other verbs also support label selection, for example, you could remove both of these pods with:
@@ -115,13 +115,13 @@ We can use labels for filtering a list.
 
 ---
 
-Note: Labels are not restricted to pods. In fact, you can apply them to all sorts of objects, such as nodes or services.
+Note: Labels are not restricted to pods. In fact, you can apply them to all sorts of objects, such as `nodes` or `services`.
 
 ---
 
-### Exercise 3 (Optional)
+### Exercise 3 (Optional): Using Selectors
 
-1. Deploy 3 pods; each one with  different labels: `version=1`, `version=2` and `version=3`
+1. Deploy 3 pods; each one with different labels: `version=1`, `version=2` and `version=3`
 
 1. List the pods using selectors that will return all pods with versions not equal to 3
 
