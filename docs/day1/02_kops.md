@@ -61,7 +61,7 @@
    
    export KOPS_FEATURE_FLAGS=AlphaAllowGCE # to unlock the GCE features
    
-   kops create cluster simple.k8s.local --zones us-west1-b --state gs://kubernetes-<unique value>/ --project=${PROJECT}
+   kops create cluster simple.k8s.local --zones us-west1-c --state gs://kubernetes-<unique value>/ --project=${PROJECT}
    ```
    
    >Note: This only created the configuration which can be viewed here:
