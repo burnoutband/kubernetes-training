@@ -48,7 +48,7 @@
     Run the following command and replace `<unique value>` with your username or other.
 
     ```console
-    gsutil mb gs://kubernetes-<unique value>/
+    gsutil mb gs://kubernetes-<unique value>
     ```
     Here we are creating a GCP bucket to store the cluster configuration for kops
 
@@ -61,24 +61,24 @@
    
    export KOPS_FEATURE_FLAGS=AlphaAllowGCE # to unlock the GCE features
    
-   kops create cluster simple.k8s.local --zones us-west1-b --state gs://kubernetes-<unique value>/ --project=${PROJECT}
+   kops create cluster simple.k8s.local --zones us-west1-c --state gs://kubernetes-<unique value> --project=${PROJECT}
    ```
    
    >Note: This only created the configuration which can be viewed here:
    
    ```console
-   kops get cluster --state gs://kubernetes-<unique value>/
+   kops get cluster --state gs://kubernetes-<unique value>
    
-   kops get instancegroup --state gs://kubernetes-<unique value>/ --name simple.k8s.local
+   kops get instancegroup --state gs://kubernetes-<unique value> --name simple.k8s.local
    
-   kops get cluster --state gs://kubernetes-<unique value>/ simple.k8s.local -oyaml
+   kops get cluster --state gs://kubernetes-<unique value> simple.k8s.local -oyaml
    ```
    >Note: We can set a variable for the state store to make commands shorter:
 
    ```console
-   export KOPS_STATE_STORE=gs://kubernetes-<unique value>/
+   export KOPS_STATE_STORE=gs://kubernetes-<unique value>
 
-   echo 'export KOPS_STATE_STORE=gs://kubernetes-<unique value>/' >> ~/.bashrc
+   echo 'export KOPS_STATE_STORE=gs://kubernetes-<unique value>' >> ~/.bashrc
    echo 'export KOPS_FEATURE_FLAGS=AlphaAllowGCE' >> ~/.bashrc
    ```
 

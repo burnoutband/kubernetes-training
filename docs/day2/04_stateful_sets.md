@@ -2,7 +2,9 @@
 
 StatefulSet is the workload API object used to manage stateful applications.
 
-Like a Deployment, a StatefulSet manages Pods that are based on an identical container spec. Unlike a Deployment, a StatefulSet maintains a sticky identity for each of their Pods. These pods are created from the same spec, but are not interchangeable: each has a persistent identifier that it maintains across any rescheduling.
+Like a Deployment, a StatefulSet manages Pods that are based on an identical container spec. 
+
+Unlike a Deployment, a StatefulSet maintains a sticky identity for each of their Pods. These pods are created from the same spec, but are not interchangeable: each has a persistent identifier that it maintains across any rescheduling.
 
 ### Exercise 1: Deploying Cassandra with Stateful Sets
 
@@ -133,13 +135,19 @@ Like a Deployment, a StatefulSet manages Pods that are based on an identical con
     ```
     kubectl get pods -l="app=cassandra"
     ```
-    The response should be
+    The response should be...
     ```
        NAME          READY     STATUS              RESTARTS   AGE
-       cassandra-0   1/1       Running             0          1m
-       cassandra-1   0/1       ContainerCreating   0          8s
+       cassandra-0   0/1       ContainerCreating   0          3s
     ```
-
+    Eventually the response will be...
+    ```
+       NAME          READY     STATUS              RESTARTS   AGE
+       cassandra-0   1/1       Running             0          4m
+       cassandra-1   1/1       Running             0          3m
+       cassandra-2   1/1       Running             0          2m
+    ```
+    
 1. Run the Cassandra utility nodetool to display the status of the ring.
     ```
     kubectl exec cassandra-0 -- nodetool status
@@ -152,10 +160,18 @@ Like a Deployment, a StatefulSet manages Pods that are based on an identical con
        |/ State=Normal/Leaving/Joining/Moving
        --  Address     Load       Tokens       Owns (effective)  Host ID                               Rack
        UN  172.17.0.5  83.57 KiB  32           74.0%             e2dd09e6-d9d3-477e-96c5-45094c08db0f  Rack1-K8Demo
-       UN  172.17.0.4  101.04 KiB  32           58.8%             f89d6835-3a42-4419-92b3-0e62cae1479c  Rack1-K8Demo
+       UN  172.17.0.4  101.04 KiB 32           58.8%             f89d6835-3a42-4419-92b3-0e62cae1479c  Rack1-K8Demo
        UN  172.17.0.6  84.74 KiB  32           67.1%             a6a1e8c2-3dc5-4417-b1a0-26507af2aaad  Rack1-K8Demo
     ```  
 
 ### Exercise 2 (Optional): Scale
 
 1. Scale cassandra cluster up and down. Observe in what order kubernetes deploys/deletes pods. 
+
+### Cleanup
+
+1. Delete the stateful set and service
+    ```
+    kubectl delete pods -l="app=cassandra"
+    kubectl delete service cassandra
+    ```

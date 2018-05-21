@@ -19,7 +19,10 @@ A pod is a collection of containers sharing a network and mount namespace and is
     kubectl describe pod <pod-name>
     ```
 
-1. From GCP console VM instances tab ssh to any of the nodes, either worker or master. (GCP allows you to ssh using web browser just by clicking on SSH button) This step is required because by default pod network is not open to outside world.
+1. From GCP console VM instances tab ssh to any of the nodes, either worker or master. (GCP allows you to ssh using web browser just by clicking on SSH button or with a new Cloud Shell session) This step is required because by default pod network is not open to outside world.
+    ```
+    gcloud compute --project "$DEVSHELL_PROJECT_ID" ssh --zone "us-west1-c" "<vm-instance-name>"
+    ```
 
 1. Connect to the pod.
     ```
@@ -38,7 +41,7 @@ A pod is a collection of containers sharing a network and mount namespace and is
 
 ### Exercise 2: Launch a pod using the configuration file
 
-1. Save the following file as `pod.yml`
+1. Save the following file as `pod.yaml`
     ```console
     apiVersion: v1
     kind: Pod
@@ -59,9 +62,9 @@ A pod is a collection of containers sharing a network and mount namespace and is
     ```
     Here we specify that our new pod should contain 2 containers. The first one runs the same application as previously. The second one runs sleep command. 
 
-1. Create a pod from `pod.yml` configuration file.
+1. Create a pod from `pod.yaml` configuration file.
     ```
-    kubectl create -f pod.yml
+    kubectl create -f pod.yaml
     ```
 
 1. Navigate inside the second container.
@@ -81,7 +84,7 @@ A pod is a collection of containers sharing a network and mount namespace and is
 
 ### Exercise 3 (Optional): Deploy a pod from custom image.
 
-1. Push `nginx` image, created in the docker part of the course, to dockerhub. [link](https://ropenscilabs.github.io/r-docker-tutorial/04-Dockerhub.html)
+1. Push `nginx` image, created in the docker part of the course, to dockerhub. [Reference link](https://ropenscilabs.github.io/r-docker-tutorial/04-Dockerhub.html)
 1. Run a pod using this image.
 
 ### Exercise 4 (Optional): Limit pod resources

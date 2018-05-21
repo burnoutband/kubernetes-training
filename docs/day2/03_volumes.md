@@ -204,7 +204,7 @@
 1. Delete wordpress persistent volume claim. 
 1. Manually create a persistent disk in GCE. (Compute engine -> Disks -> Create disk, use `source type = none` to create an empty disk) or use the following command
     ```
-    gcloud compute disks create --size=500GB --zone=us-west1-b my-data-disk
+    gcloud compute disks create --size=200GB --zone=us-west1-c my-data-disk
     ```
 1. Change wordpress deployment to use your persistent disk instead of persistent volume claim. Find `gcePersistentDisk` section in [this](https://kubernetes.io/docs/concepts/storage/volumes/) document for reference.
 
@@ -215,3 +215,21 @@
 1. Wait for kubernetes to restart the pod.
 1. Make sure that persistend data isn't lost.
 
+### Cleanup
+
+1. Delete all mysql resources
+    ```
+    kubectl delete -f mysql.yaml
+    ```
+    
+1. Delete all wordpress resources
+    ```
+    kubectl delete -f wordpress.yaml
+    ```
+    
+1. Delete the manually created persistent disk (if created)
+    ```
+    gcloud compute disks delete --zone=us-west1-c my-data-disk
+    ```
+
+Note: We could also cleanup using the wordpress label

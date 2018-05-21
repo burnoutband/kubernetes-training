@@ -197,7 +197,6 @@ Keeping the mapping between the VIP and the pods up-to-date is the job of kube-p
 1. Deploy the fronted service.
     ```
     kubectl apply -f frontend-service.yaml
-
     ```
 
 1. Run `kubectl get services` to list all services.
@@ -206,13 +205,15 @@ Keeping the mapping between the VIP and the pods up-to-date is the job of kube-p
     ```
     kubectl get service frontend
     ```
+ 
+1. In GCE Cloud Console, find and investigate the external IP address that the `LoadBalancer` service type created
+    * VPC Network -> External IP addresses
 
 1. Copy the External IP address, and load the page in your browser to view the application.
 
 1. Run the following command to scale up the number of frontend Pods
     ```
-    kubectl scale deployment frontend –replicas=5
-
+    kubectl scale deployment frontend --replicas=5
     ```
 
 ### Exercise 2 (Optional): Investigate source code of the sample
@@ -223,11 +224,19 @@ Keeping the mapping between the VIP and the pods up-to-date is the job of kube-p
     * Redis slave startup script: [link](https://github.com/kubernetes/examples/blob/master/guestbook/redis-slave/run.sh)
     * PHP application: [link](https://github.com/kubernetes/examples/blob/master/guestbook/php-redis/guestbook.php)
 1. Make sure you understand the following:
-    * How redis slave connects to redis master? What address is it using?
-    * How php app connects to both redis master and redis slave?
+    * How a redis slave connects to the redis master? What address is it using?
+    * How the php app connects to both the redis master and redis slaves?
 
 ### Exercise 4 (Optional): Manually connect to redis from app pod 
 
-1. Go inside any frontend pods. Use `redis-tools` package to install [redis-cli](https://redis.io/topics/rediscli) Use `redis-cli` to connect to redis master.
+1. Go inside any frontend pods. 
+1. Use `redis-tools` package to install [redis-cli](https://redis.io/topics/rediscli)
+1. Use `redis-cli` to connect to redis master.
 
+### Cleanup
 
+1. Delete the services and deployments
+    ```
+    kubectl delete service frontend redis-slave redis-master
+    kubectl delete deployment frontend redis-slave redis-master
+    ```
