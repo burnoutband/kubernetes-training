@@ -79,6 +79,7 @@
    export KOPS_STATE_STORE=gs://kubernetes-<unique value>/
 
    echo 'export KOPS_STATE_STORE=gs://kubernetes-<unique value>/' >> ~/.bashrc
+   echo 'export KOPS_FEATURE_FLAGS=AlphaAllowGCE' >> ~/.bashrc
    ```
 
 1. Building the cluster in GCE
