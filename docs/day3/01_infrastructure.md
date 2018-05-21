@@ -57,6 +57,11 @@
     kops export kubecfg new.k8s.local
     ```
 
+1. Check whether the cluster is healthy 
+    ```
+    kubectl cluster-info
+    ```
+
 1. Oops, at this point you will probably see a connection error. The error is expected and it is caused by a bug in kops terraform integration. Now we will try to troubleshoot the cluster.
 
 ### Exercise 2 (Optional): Advanced cluster troubleshooting
