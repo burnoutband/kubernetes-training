@@ -1,7 +1,8 @@
 ## Kubelet
 
-The kubelet is the primary “node agent” that runs on each node. The kubelet takes a set of PodSpecs that are provided through various mechanisms (primarily through the apiserver) and ensures that the containers described in those PodSpecs are running and healthy. 
+The kubelet is the primary “node agent” that runs on each node. 
 
+The kubelet takes a set of PodSpecs that are provided through various mechanisms (primarily through the apiserver) and ensures that the containers described in those PodSpecs are running and healthy. 
 
 ### Exercise 1: Investigate kubelet 
 
@@ -9,13 +10,13 @@ The kubelet is the primary “node agent” that runs on each node. The kubelet 
     * In the GCP Console, go to the VM Instances page.
     * In the list of virtual machine instances, click SSH in the row of the master instance.
 
-1. Check kubelet service status
+1. Check the kubelet service status
     ```
     systemctl status kubelet
     ```
-    The status should be `Active(running)`
+    The status should be `active(running)`
 
-1. Examine kubelet startup parameters 
+1. Check the kubelet startup parameters 
 
     Save output of the previous commend to a file
     ```
@@ -28,15 +29,14 @@ The kubelet is the primary “node agent” that runs on each node. The kubelet 
     * `--network-plugin=kubenet` - use [kubenet](https://kubernetes.io/docs/concepts/extend-kubernetes/compute-storage-net/network-plugins/#kubenet) network plugin
     * `--pod-manifest-path=/etc/kubernetes/manifests` - the folder where all static pods are located.
 
-1. Check kubelet logs
+1. Check the kubelet logs
     ```
     sudo journalctl -u kubelet
     ```
-    You don't need to understand everything from here, just remember how to access those logs for troubleshooting.
-    
+    You don't need to understand everything from here, just remember how to access these logs for troubleshooting.
 
 ### Exercise 2 (Optional): Run a static pod 
 
-1. Put your own pod into `--pod-manifest-path` folder. (The folder should be watched every 20s, so no need to restart kubelet)
+1. Put your own pod manifest into `--pod-manifest-path` folder. (The folder should be watched every 20s, so no need to restart kubelet)
 1. Check whether kubernetes will run your pod. 
 
