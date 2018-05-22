@@ -4,30 +4,36 @@
 
 1. SSH to the master node.
 
-1. Move `kube-scheduler.manifest`  out of the `/etc/kubernetes/manifests/`
-
-1. Wait until the kubelet shuts down the scheduler pod.
-
-    Use the following command to list all system pods
+1. Move the kube-scheduler manifest out of the `/etc/kubernetes/manifests/` folder
+    ```
+    sudo mv /etc/kubernetes/manifests/kube-scheduler.manifest ~
+    ```
+1. Wait until the kubelet shuts down the scheduler pod. This can be checked by listing all system pods.
     ```
     kubectl --namespace kube-system get pods
     ```
 
-1. Deploy some pod normally.
+1. Deploy a pod normally.
 
-1. Use `get pods` command to list all pods. The one that you've just deployed should be in a Pending state with no node assigned to it.
+1. Use `get pods` command to list all pods. The one that you've just deployed should be in a pending state with no node assigned to it.
 
 1. Use `describe pod` command to check which node is assigned to the pod.
 
-1. Return the schedules definition back to the `/etc/kubernetes/manifests/` folder on the master node.
+1. Return the kube-scheduler manifest back to the `/etc/kubernetes/manifests/` folder on the master node.
+    ```
+    sudo mv ~/kube-scheduler.manifest /etc/kubernetes/manifests/
+    ```
 
 1. Wait until the scheduler runs and make sure that now a node is assigned to the pod and the pod is running.
 
 
 ### Exercise 2: Manually schedule a pod 
 
-1. While the default schedulrer is disabled, try to manually assign a node to the container using API. 
-    * Use curl to sent a POST requiest to the `{namespace}/pods/{name}/binding` enpoint. 
+1. While the default schedulrer is disabled and a pod in the Pending state, try to manually assign a node to the container using API.
+    * Use curl to sent a POST requiest to the `/api/v1/namespaces/{namespace}/bindings` enpoint. 
     * The body of the request should have the following format `{"apiVersion":"v1", "kind": "Binding", "metadata": {"name": "<pod-name>"}, "target": {"apiVersion": "v1", "kind": "Node", "name": "<node-name>"}}`
-    * Use [this](https://kubernetes-v1-4.github.io/docs/api-reference/v1/operations/) and [this](https://kubernetes.io/blog/2017/03/advanced-scheduling-in-kubernetes/) docs for referennce.
+    * Use the official [Reference documentation](https://kubernetes.io/docs/reference/) and correct version of the [API Reference](https://v1-9.docs.kubernetes.io/docs/reference/generated/kubernetes-api/v1.9/#binding-v1-core) to help.  
+    ```
+    curl -X POST 127.0.0.1:8080/api/v1/namespaces/default/bindings -H "Content-Type:application/json" -d '{"apiVersion":"v1", "kind": "Binding", "metadata": {"name": "twocontainers"}, "target": {"apiVersion": "v1", "kind": "Node", "name": "master-us-west1-c-4lmf"}}'
+    ```
 
