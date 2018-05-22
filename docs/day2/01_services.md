@@ -227,11 +227,18 @@ Keeping the mapping between the VIP and the pods up-to-date is the job of kube-p
     * How a redis slave connects to the redis master? What address is it using?
     * How the php app connects to both the redis master and redis slaves?
 
-### Exercise 4 (Optional): Manually connect to redis from app pod 
+### Exercise 3 (Optional): Manually connect to redis from app pod 
 
 1. Go inside any frontend pods. 
 1. Use `redis-tools` package to install [redis-cli](https://redis.io/topics/rediscli)
 1. Use `redis-cli` to connect to redis master.
+
+### Exercise 4 (Optional): Blue green deployment
+
+1. Create a deployment called "blue"  with label "app=blue".
+1. Create a service that uses the same selector "app=blue"  
+1. Create a second deployment with label "app=green". The deployment should contain the same application. (in a real scenario this should be a different version of the app, but for your example, you can use exactly the same app)
+1. Change service selector to "app=green" and make sure that now the service switched to the second deployment.
 
 ### Cleanup
 
