@@ -66,7 +66,7 @@
 
 1. Explore the Kubernetes Dashboard and what information you can find there.
 
-### Exercise 2: Switching cluster network provider 
+### Exercise 2: Using kops to change the cluster configuration
 
 1. Run the following command to edit cluster configuration.
     ```
@@ -75,10 +75,9 @@
 
 1. Find `networking` section.
 
-1. Edit it to switch network provider.
+1. Find `kubernetesVersion` and upgrade Kubernetes to a newer patch version.
     ```
-      networking:
-        calico: {}
+      kubernetesVersion: 1.9.7
     ```
 
 1. Apply the changes.
@@ -91,12 +90,11 @@
     ```
     Pay attention to how kops drains all pods from the node that is being updated. This allows kops to make the update without app downtime.
 
-1. SSH to the master node and make sure that kubelet now runs with `--network-plugin=cni` argument.
+1. Check that the server version of kubernetes has been upgraded successfully
     ```
-    systemctl status kubelet
+    kubectl version
+    kubectl get nodes
     ```
-
-1. Deploy two pods that talk to each other, to make sure that network provider is working correctly.
 
 ### Exercise 3 (Optional): Deploy a Highly Available Cluster 
 
