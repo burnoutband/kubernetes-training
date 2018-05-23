@@ -106,4 +106,4 @@
 ### Exercise 3 (Optional): Add Heapster metrics to the Kubernetes Dashboard
 
 1. Deploy Heapster inside the `kube-system` namespace and expose a `heapster` service. [Reference link](https://github.com/kubernetes/dashboard/wiki/Integrations)
-1. Modify the dashboard deployment to specify the --heapster-host flag
+1. Modify the dashboard deployment to use heapster
