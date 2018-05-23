@@ -36,4 +36,6 @@
     ```
     curl -X POST 127.0.0.1:8080/api/v1/namespaces/default/bindings -H "Content-Type:application/json" -d '{"apiVersion":"v1", "kind": "Binding", "metadata": {"name": "twocontainers"}, "target": {"apiVersion": "v1", "kind": "Node", "name": "master-us-west1-c-4lmf"}}'
     ```
+    * Make sure you copy/move the kube-scheduler manifest back into `/etc/kubernetes/manifests/`
+
 
