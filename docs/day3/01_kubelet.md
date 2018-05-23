@@ -2,7 +2,7 @@
 
 The kubelet is the primary “node agent” that runs on each node. 
 
-The kubelet takes a set of PodSpecs that are provided through various mechanisms (primarily through the apiserver) and ensures that the containers described in those PodSpecs are running and healthy. 
+The kubelet takes a set of PodSpecs that are provided through various mechanisms (primarily through the apiserver) and ensures  the containers described in those PodSpecs are running and healthy. 
 
 ### Exercise 1: Investigate kubelet 
 
@@ -14,11 +14,11 @@ The kubelet takes a set of PodSpecs that are provided through various mechanisms
     ```
     systemctl status kubelet
     ```
-    The status should be `active(running)`
+    The status should be `active(running)`.
 
 1. Check the kubelet startup parameters 
 
-    Save output of the previous commend to a file
+    Save output of the previous commend to a file.
     ```
     systemctl status kubelet > /tmp/kubelet-params
     ``` 
