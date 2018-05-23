@@ -35,6 +35,11 @@
     kubectl create -f dashboard-service-account.yaml
     ```
 
+1. Get the admin-user secret token.
+    ```
+    kubectl -n kube-system describe secret $(kubectl -n kube-system get secret | grep admin-user | awk '{print $1}')
+    ```
+    
 1. Start a proxy on port 8080.
     ```
     kubectl proxy -p 8080
@@ -50,16 +55,6 @@
     
     E.g., `https://8080-dot-3438793-dot-devshell.appspot.com/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/`
 
-1. Get the admin-user secret token.
-    ```
-    kubectl -n kube-system describe secret $(kubectl -n kube-system get secret | grep admin-user | awk '{print $1}')
-    ```
-    
-1. Get the admin-user secret token.
-    ```
-    kubectl -n kube-system describe secret $(kubectl -n kube-system get secret | grep admin-user | awk '{print $1}')
-    ```
-
 1. From the dashboard UI, paste in the token value. Ensure there are no line breaks when copying the token.
 
 1. You should be successfully logged in as admin-user.
@@ -72,8 +67,6 @@
     ```
     kops edit cluster
     ```
-
-1. Find `networking` section.
 
 1. Find `kubernetesVersion` and upgrade Kubernetes to a newer patch version.
     ```
