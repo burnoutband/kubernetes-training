@@ -14,3 +14,11 @@
     1. [Stateful Sets](docs/day2/04_stateful_sets.md)
     1. [Ingress](docs/day2/05_ingress.md)
     1. [Namespaces and RBAC](docs/day2/06_namespaces.md)
+* **Day 3**
+    1. [Kubelet](docs/day3/01_kubelet.md)
+    1. [API Server](docs/day3/02_api.md)
+    1. [etcd](docs/day3/03_etcd.md)
+    1. [Scheduler](docs/day3/04_scheduler.md)
+    1. [Manage infrastructure using terraform](docs/day3/05_infrastructure.md)
+    1. [Networking](docs/day3/06_networking.md)
+    1. [kops deep dive](docs/day3/07_kops.md)
