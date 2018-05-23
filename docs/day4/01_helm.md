@@ -72,15 +72,16 @@ The package manager for Kubernetes
 
 1. Open web preview on port 3000 and check grafana interface.
 
-1. Click on `Home` at the top left cornet to list all available dashboards.
+1. Click on `Home` at the top left corner to list all available dashboards.
 
 
 ### Exercise 2 (Optional): Use `helm -h` to figure out how to do the following
 
-1. List all availabe charts.
+1. List all available charts.
 1. List all deployed charts. 
 1. Provide configuration parameters for a chart during deployment.
 1. Upgrade and rollback a chart.
 1. Inspect a chart.
 
 Try all operations, mentioned above.
+

@@ -48,4 +48,5 @@ etcd, as most of the kubernetes system components, runs inside a static pod. Thi
 ### Exercise 2: Backup etcd 
 
 1. Follow the instructions in the etcd documentation to create an etcd backup. [Reference link](https://coreos.com/etcd/docs/latest/v2/admin_guide.html#disaster-recovery) 
+1. Deploy etcd on a separate VM [link](https://docs.openstack.org/install-guide/environment-etcd-ubuntu.html), and apply the backup.
 
