@@ -164,7 +164,7 @@ In this exercise, however, we are going to manually create a service account and
 
 ### Exercise 4 (Optional): Assign the default view cluster role to a user and try to deploy a pod 
 
-1. There are some default user-facing roles that can be used to easily assign cluster-wide or namespace permissions. See the [reference link] for more information.
+1. There are some default user-facing roles that can be used to easily assign cluster-wide or namespace permissions. See the [reference link](https://kubernetes.io/docs/admin/authorization/rbac/#user-facing-roles) for more information.
 1. Create a ClusterRoleBinding with the `view` ClusterRole and the `employee` user as a subject.
 1. Try deploy a pod to the default namespace using the employee context
 1. Try list the pod in the default namespace using the employee context
