@@ -23,7 +23,7 @@ The API Server services REST operations and provides the frontend to the cluster
 
 ### Exercise 2 (Optional): Deploy a pod using API 
 
-1. Check [API documentation](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.10/#create-55) to see the structure of the json object that needs to be posted to the API in order to deploy a pod. (The structure is exactly the same as the structure of the yaml pod definition, you can use any yaml to json converter to get required object)
-1. Post you json to the API server in order to deploy a pod. (Use `curl -X POST -d '<your json file>'` to execute a POST request) 
+1. Check the [API documentation](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.10/#create-55) to see the structure of the json object that needs to be posted to the API in order to deploy a pod. (The structure is exactly the same as the structure of the yaml pod definition, you can use any yaml to json converter to get required object)
+1. Post your json to the API server in order to deploy a pod. (Use `curl -X POST -d '<your json file>'` to execute a POST request) 
 1. Check that your pod is deployed successfully.
 
