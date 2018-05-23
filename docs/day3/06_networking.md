@@ -51,7 +51,7 @@
     ```
     sudo iptables-save | grep simpleservice
     ```
-    The output should look like this 
+    The output should resemble this:
     ```
     -A KUBE-SEP-5FXC3Y3RDI3GY23F -s 100.96.2.4/32 -m comment --comment "default/simpleservice-svc:" -j KUBE-MARK-MASQ
     -A KUBE-SEP-5FXC3Y3RDI3GY23F -p tcp -m comment --comment "default/simpleservice-svc:" -m tcp -j DNAT --to-destination 100.96.2.4:9876
