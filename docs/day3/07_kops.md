@@ -2,7 +2,7 @@
 
 ### Exercise 1: Installing the Kubernetes Dashboard Addon 
 
-1. Install the [dashboard](https://github.com/kubernetes/dashboard) addon 
+1. Install the [dashboard](https://github.com/kubernetes/dashboard) addon.
     ```
     kubectl create -f https://raw.githubusercontent.com/kubernetes/kops/master/addons/kubernetes-dashboard/v1.8.3.yaml
     ```
@@ -30,12 +30,12 @@
       namespace: kube-system
     ```
     
-1. Create and bind the role
+1. Create and bind the role.
     ```
     kubectl create -f dashboard-service-account.yaml
     ```
 
-1. Start a proxy on port 8080
+1. Start a proxy on port 8080.
     ```
     kubectl proxy -p 8080
     ```
@@ -43,46 +43,45 @@
 1. Forward port 8080 from the Cloud Shell to your local machine. 
 
     From Cloud Shell top bar select option `Preview on port 8080` 
-    
 
 1. View the dashboard service on the /proxy/ endpoint.
 
     Append `api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/` to the top level domain.
     
-    E.g. `https://8080-dot-3438793-dot-devshell.appspot.com/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/`
+    E.g., `https://8080-dot-3438793-dot-devshell.appspot.com/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/`
 
-1. Get the admin-user secret token
+1. Get the admin-user secret token.
     ```
     kubectl -n kube-system describe secret $(kubectl -n kube-system get secret | grep admin-user | awk '{print $1}')
     ```
     
-1. Get the admin-user secret token
+1. Get the admin-user secret token.
     ```
     kubectl -n kube-system describe secret $(kubectl -n kube-system get secret | grep admin-user | awk '{print $1}')
     ```
 
-1. From the dashboard UI paste in the token value. Ensure there are no line breaks when copying the token.
+1. From the dashboard UI, paste in the token value. Ensure there are no line breaks when copying the token.
 
 1. You should be successfully logged in as admin-user.
 
-1. Explore the Kubernetes Dashboard and what information you can find from it.
+1. Explore the Kubernetes Dashboard and what information you can find there.
 
 ### Exercise 2: Switching cluster network provider 
 
-1. Run the following command to edit cluster configuration
+1. Run the following command to edit cluster configuration.
     ```
     kops edit cluster
     ```
 
-1. Find `networking` section
+1. Find `networking` section.
 
-1. Edit it to switch network provider
+1. Edit it to switch network provider.
     ```
       networking:
         calico: {}
     ```
 
-1. Apply the changes
+1. Apply the changes.
     ```
     export KOPS_FEATURE_FLAGS=AlphaAllowGCE # If unset
     kops update cluster # to preview
@@ -92,7 +91,7 @@
     ```
     Pay attention to how kops drains all pods from the node that is being updated. This allows kops to make the update without app downtime.
 
-1. SSH to the master node and make sure that now kubelet runs with `--network-plugin=cni` argument.
+1. SSH to the master node and make sure that kubelet now runs with `--network-plugin=cni` argument.
     ```
     systemctl status kubelet
     ```
@@ -101,7 +100,7 @@
 
 ### Exercise 3 (Optional): Deploy a Highly Available Cluster 
 
-1. Deploy a new cluster. Follow the instructions in the [kops documentation](https://github.com/kubernetes/kops/blob/master/docs/high_availability.md)
+1. Deploy a new cluster.  Follow the instructions in the [kops documentation](https://github.com/kubernetes/kops/blob/master/docs/high_availability.md)
 1. Delete the second cluster.
 
 ### Exercise 3 (Optional): Add Heapster metrics to the Kubernetes Dashboard
