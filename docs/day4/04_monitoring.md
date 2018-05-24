@@ -2,11 +2,9 @@
 
 ### Exercise 1: Deploy a new application and configure for monitoring
 
-1. Use helm to deploy Prometheus
+1. Deploy a new test application to your cluster.
 
-1. Use deploy a new application to your cluster.
-
-1. Verify the application is being monitored by `Prometheus`.
+1. Verify the application is being monitored by `Prometheus`
 
 1. Configure a `Grafana` dashboard to display metrics for your app.
 
