@@ -21,4 +21,9 @@
     1. [Scheduler](docs/day3/04_scheduler.md)
     1. [Manage infrastructure using terraform](docs/day3/05_infrastructure.md)
     1. [Networking](docs/day3/06_networking.md)
-    1. [kops deep dive](docs/day3/07_kops.md)
+* **Day 4**
+    1. [Configuration Updates and Dashboards](docs/day4/01_kops.md)
+    1. [Helm](docs/day4/02_helm.md)
+    1. [Federated Clusters](docs/day4/03_federation.md)
+    1. [Logging](docs/day4/04_logging.md)
+    1. [Monitoring](docs/day4/05_monitoring.md)

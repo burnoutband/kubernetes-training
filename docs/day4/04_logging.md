@@ -29,3 +29,7 @@ Setting up an EFK stack on Kubernetes.
     E.g. `https://8080-dot-3438793-dot-devshell.appspot.com/api/v1/namespaces/kube-system/services/kibana-logging/proxy`
 
 1. Explore the Kibana Dashboard and what information you can find there.
+
+### Exercise 2 (Optional): Setup a Kibana Dashboard for Kube-System
+
+1. Create a dashboard to quickly identify the type of error we saw in the previous exercise.
