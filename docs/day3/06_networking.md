@@ -78,6 +78,7 @@ Try the following configurations.
     
 
 ## Cleanup.
-    ```
-    kubectl delete -f simple-service.yaml
-    ```
+
+```
+kubectl delete -f simple-service.yaml
+```
