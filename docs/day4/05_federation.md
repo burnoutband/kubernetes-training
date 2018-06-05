@@ -10,7 +10,7 @@
 
 1.  Select your host cluster. 
     * Run `kubectl config get-contexts` to list all available contexts and check what context is curently used. (You should see at least 2 contexts, corresponding to both your clusters)
-    * Use `kubectl config use-context simple.k8s.local' command to set current context to 'simple.k8s.local'. 
+    * Use `kubectl config use-context simple.k8s.local` command to set current context to `simple.k8s.local`.
 
 1. Create GCP managed DNS zone
     ```
