@@ -8,7 +8,7 @@
     * `kops create cluster second.soroko-gcp.altoros.com --zones us-west1-b --project=${PROJECT}`
     * `kops create cluster third.soroko-gcp.altoros.com --zones us-west1-a --project=${PROJECT}`
 
-(Note: due to a [bug](https://github.com/kubernetes/kops/issues/5281) you need to edit nodes/master definitions to use `cos-cloud/cos-stable-60-9592-90-0` image before you start deploy. To do that see instructions from `kops` after you run `create` command (look for `kops edit ...` commands).)
+(Note: due to the [bug](https://github.com/kubernetes/kops/issues/5281) you need to edit nodes/master definitions to use `cos-cloud/cos-stable-60-9592-90-0` image before you start deploy. To do that see instructions from `kops` after you run `create` command  - look for `kops edit ...` commands.)
 
 1. Check that `kops` created DNS records for you in `soroko-gcp.altoros.com` zone
 
@@ -35,13 +35,15 @@
 1. Check `controller-manager` pod:
     * `kubectl config use-context first.soroko-gcp.altoros.com`
     * `kubectl -n federation-system get pods`
-    * `kubectl -n federation-system get pod controller-manager-85f8bb8bf-ggbb2`
-    * `kubectl -n federation-system describe pod controller-manager-85f8bb8bf-ggbb2`
-    * `kubectl -n federation-system logs controller-manager-85f8bb8bf-ggbb2 -f`
+    * `kubectl -n federation-system get pod controller-manager-...`
+    * `kubectl -n federation-system describe pod controller-...`
+    * `kubectl -n federation-system logs controller-manager-... -f`
 
 1. Check that `controller-manager` created DNS records for you in `kubefed.soroko-gcp.altoros.com` zone
 
-1. Create default namespace: `kubectl get namespace --context=fellowship` and `kubectl create namespace default --context=fellowship`
+1. Create default namespace:
+    * `kubectl get namespace --context=fellowship`
+    * `kubectl create namespace default --context=fellowship`
 
 1. Use federation context: `kubectl config use-context fellowship`
 
@@ -56,7 +58,7 @@
     * `wget https://raw.githubusercontent.com/madeden/blogposts/master/k8s-federation/src/manifests/microbots-deployment.yaml`
     * `wget https://raw.githubusercontent.com/madeden/blogposts/master/k8s-federation/src/manifests/microbots-svc.yaml`
     * Edit `microbots-svc.yaml` to use `LoadBalancer`
-    * Edit `microbots-deployment.yaml` to use 2 replicas
+    * Edit `microbots-deployment.yaml` to use 2 `replicas`
     * Deploy `deployment`: `kubectl apply -f microbots-deployment.yaml`
     * Deploy `service`: `kubectl apply -f microbots-svc.yaml`
     * Check created resources: `kubectl get all --all-namespaces`
@@ -69,7 +71,7 @@
 
 1. Open deployed service via `LoadBalancer` IPs and DNS name.
 
-1. Run something ad-hoc, e.g.:
+1. Run something "on the go", e.g.:
     * `kubectl --context=fellowship run simpleservice --image=mhausenblas/simpleservice:0.5.0 --port=9876 -r 2`
     * `kubectl --context=fellowship expose deployment/simpleservice --type=LoadBalancer --port=80 --target-port=9876`
 
