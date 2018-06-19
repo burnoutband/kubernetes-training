@@ -1,5 +1,7 @@
 # K8s Training Materials
 
+**Updated for Bloomberg training**
+
 * **Day 1**
     1. [Creating and running containers](docs/day1/01_containers.md)
     1. [Installing a Kubernetes Cluster on Google Cloud Platform (GCP) with Kubernetes Operations (kops)](docs/day1/02_kops.md)
