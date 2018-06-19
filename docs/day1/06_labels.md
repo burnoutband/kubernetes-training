@@ -1,6 +1,6 @@
 ## Labels and Selectors
 
-Labels are the mechanism you use to organize Kubernetes objects. 
+Labels are the mechanism you use to organize Kubernetes objects.
 
 A label is a key-value pair that is meaningful and relevant to users with certain [restrictions](https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/#syntax-and-character-set) concerning length and allowed values.
 
@@ -117,13 +117,74 @@ We can use labels for filtering a list.
 
 Note: Labels are not restricted to pods. In fact, you can apply them to all sorts of objects, such as `nodes` or `services`.
 
+### Excercise 3: Using Annotations
+
+In this excercise you will add the phone number of responsible person to the running pod. Phone number contains symbols that can't be used in the label field. So you will add a new `phone` field to the `annotations`.
+
+1. Edit `annotation-pod.yaml`
+
+    ```console
+    apiVersion: v1
+    kind: Pod
+    metadata:
+      name: annotation-pod
+      labels:
+        env: production
+        owner: you
+        phone: "+1 (123) 456-78-90"
+    spec:
+      containers:
+      - name: sise
+        image: mhausenblas/simpleservice:0.5.0
+        ports:
+        - containerPort: 9876
+    ```
+2. Try to create the pod
+
+    ```
+    kubectl apply -f annotation-pod.yaml
+    ```
+
+You will get an error as phone number does not satisfy formatting requirements for a label field.
+
+3. Change phone field to annotation
+
+    ```console
+    apiVersion: v1
+    kind: Pod
+    metadata:
+      name: annotation-pod
+      labels:
+        env: production
+        owner: you
+      annotations:
+        phone: "+1 (123) 456-78-90"
+    spec:
+      containers:
+      - name: sise
+        image: mhausenblas/simpleservice:0.5.0
+        ports:
+        - containerPort: 9876
+    ```
+
+4. Create the pod
+
+    ```
+    kubectl apply -f annotation-pod.yaml
+    ```
+
+5. Check the annotation was stored in the pods metadata
+
+    ```
+    kubectl get pods --selector owner=you -o jsonpath='{.items[*].metadata.annotations.phone}'
+    ```
+
 ---
 
-### Exercise 3 (Optional): Using Selectors
+### Exercise 4 (Optional): Using Selectors
 
 1. Deploy 3 pods; each one with different labels: `version=1`, `version=2` and `version=3`
 
 1. List the pods using selectors that will return all pods with versions not equal to 3
 
 Refer to the [documentation](https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/#label-selectors) to review selector syntax.
-
