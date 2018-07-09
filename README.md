@@ -28,4 +28,5 @@
     1. [Helm](docs/day4/02_helm.md)
     1. [Logging](docs/day4/03_logging.md)
     1. [Monitoring](docs/day4/04_monitoring.md)
-    1. [Federated Clusters](docs/day4/05_federation.md)
+    1. [Federated Clusters](docs/day4/05_federation.md) (currently broken) and [Federated Clusters v2](docs/day4/05_federation_v2.md) (works but with some hacks)
+    1. [Quotas](docs/day4/06_quotas.md)
