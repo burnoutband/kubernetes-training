@@ -1,7 +1,5 @@
-Program for the Public training in Los Angeles
-=============================================
-
-May 2018
+Program for the Los Angeles public training in May 2018
+=======================================================
 
 * **Day 1**
     1. [Creating and running containers](../modules/containers.md)
