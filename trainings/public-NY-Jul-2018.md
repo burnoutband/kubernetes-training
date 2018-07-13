@@ -23,7 +23,7 @@ Program for the New York public training in Jul 2018
     1. [Manage infrastructure using terraform](../modules/infrastructure.md)
     1. [Networking](../modules/networking.md)
 * **Day 4**
-    1. [Configuration Updates and Dashboards](../modules/kops.md)
+    1. [Configuration Updates and Dashboards](../modules/kops-deep-dive.md)
     1. [Helm](../modules/helm.md)
     1. [Logging](../modules/logging.md)
     1. [Monitoring](../modules/monitoring.md)
