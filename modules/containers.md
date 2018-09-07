@@ -78,8 +78,9 @@
 
 ### Exercise 4 (Optional): Docker netwroking.
 
+1. List all network interfaces while nginx container is running in `bridge` mode (use `ifconfig` or `ip addr show`). Find `docker0` network and check its CIDR range. Go inside running container (`docker exec -it <container-id> bash`) and find its IP. Try to access port 80  in the container from host machine by using container internal IP address.
 1. Adopt previous example to use [host network](https://docs.docker.com/network/network-tutorial-host/). 
-1. Make sure you understand the difference between `host` and default `bridge` network.
-1. List all network interfaces while nginx container is running in `bridge` mode (use `ifconfig` or `ip addr show`). Find `docker0` network and check it CIDR range. Go inside running container (`docker exec -it <container-id> bash`) and find its IP. Try to access port 80  in the container from host machine by using container internal IP address.
+1. Make sure you understand the difference between [host](https://docs.docker.com/network/host/) and default [bridge](https://docs.docker.com/network/bridge/) network.
+1. Once running in network mode access the site via port 80 from host. What ip does the container have?
 
 
