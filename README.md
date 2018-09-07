@@ -8,6 +8,7 @@ Trainings
 1. [Cisco (proposed)](trainings/bloomberg-proposal.md)
 1. [Public training in New York](trainings/public-NY-Jul-2018.md)
 1. [Public training in Los Angeles](trainings/public-la-May-2018.md)
+1. [Public training in Chicago](trainings/public-Chi-Sep-2018.md)
 
 Modules
 -------
