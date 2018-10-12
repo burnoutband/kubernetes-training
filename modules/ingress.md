@@ -151,7 +151,7 @@ Ingress can provide load balancing, SSL termination and name-based virtual hosti
 ### Exercise 2 (Optional): Specify app host
 
 1. Now, app1 and app2 should be accessed using different dns names.
-1. Modify you `/etc/hosts` and set `app1.com` and `app2.com` domains to be resolved to the ingress IP address.
+1. Modify your `/etc/hosts` and set `app1.com` and `app2.com` domains to be resolved to the ingress IP address.
 1. Modify ingress definition appropriately. Find section `Name based virtual hosting` in [this](https://kubernetes.io/docs/concepts/services-networking/ingress/#types-of-ingress) document for reference.
 1. Access `app1.com` and `app2.com` from your web browser.
 

@@ -28,3 +28,4 @@ Program for the Chicago public training in Sep 2018
     1. [Logging](../modules/logging.md)
     1. [Monitoring](../modules/monitoring.md)
     1. [Federated Clusters](../modules/federation.md)
+    1. [Security](../modules/security.md)

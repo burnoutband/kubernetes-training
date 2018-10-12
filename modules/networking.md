@@ -47,7 +47,7 @@
     kubectl create -f simple-service.yaml
     ```
  
-1. SSH to any of the nodes and examine generated iptables rules.
+1. SSH to any of the nodes and examine generated [iptables rules](http://ipset.netfilter.org/iptables.man.html).
     ```
     sudo iptables-save | grep simpleservice
     ```

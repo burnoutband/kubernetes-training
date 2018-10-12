@@ -72,14 +72,14 @@ spec:
 ```
 
 ```
-$ kubectl apply -f psp.yaml
+kubectl apply -f psp.yaml
 ```
 
 Typically `Pods` are created by `Deployments`, `ReplicaSets`, not by the user directly. We need to grant permissions for using this policy to the default account.
 
-```
-role.yaml:
 
+Create a role called `role.yaml`:
+```
 kind: ClusterRole
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
@@ -94,10 +94,12 @@ rules:
   verbs:
   - use
 
-$ kubectl apply -f role.yaml
+```
+kubectl apply -f role.yaml
+```
 
-bind.yaml:
-
+Create rolebinding `bind.yaml`:
+```
 apiVersion: rbac.authorization.k8s.io/v1beta1
 kind: RoleBinding
 metadata:
@@ -112,14 +114,16 @@ subjects:
 - kind: ServiceAccount # Omit apiGroup
   name: default
   namespace: default
-  
-$ kubectl apply -f binding.yaml
+```
+
+```
+kubectl apply -f binding.yaml
 ```
 
 Now try to create a priviledged container:
 
 ```
-$ kubectl create -f- <<EOF
+kubectl create -f- <<EOF
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -147,7 +151,10 @@ EOF
 `Deployment` creates `ReplicaSet` that in turn creates `Pod`. Let' see the `ReplicaSet` state.
 
 ```
-$ kubectl get rs -l=app=privileged
+kubectl get rs -l=app=privileged
+```
+
+```
 NAME                    DESIRED   CURRENT   READY     AGE
 privileged-6c96db7488   1         0         0         5m
 ```
@@ -155,7 +162,10 @@ privileged-6c96db7488   1         0         0         5m
 No pods created. Why?
 
 ```
-$ kubectl describe rs -l=app=privileged
+kubectl describe rs -l=app=privileged
+```
+
+```
 ..
 Error creating: pods "privileged-6c96db7488-" is forbidden: unable to validate against any pod security policy: [spec.containers[0].securityContext.privileged: Invalid value: true: Privileged containers are not allowed]
 ```
@@ -165,7 +175,7 @@ Admission controller forbids creating priviledged container as the applied polic
 What happens if you create pod directly?
 
 ```
-$ kubectl create -f- <<EOF
+kubectl create -f- <<EOF
 apiVersion: v1
 kind: Pod
 metadata:
@@ -187,10 +197,7 @@ Network policy
 Let's see how to use network policy for blocking the external traffic for a `Pod`
 
 Create file called `deny-egress.yaml`:
-
 ```
-deny-egress.yaml:
-
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
@@ -208,8 +215,10 @@ spec:
       protocol: UDP
     - port: 53
       protocol: TCP
+```
 
-$ kubectl apply -f deny-egress.yaml
+```
+kubectl apply -f deny-egress.yaml
 ```
 
 This file blocks all the outgoing traffic except DNS resolution.
@@ -217,9 +226,15 @@ This file blocks all the outgoing traffic except DNS resolution.
 Now start the pod that matches label `app=foo`
 
 ```
-$ kubectl run --rm --restart=Never --image=alpine -i -t -l app=foo test -- ash
+kubectl run --rm --restart=Never --image=alpine -i -t -l app=foo test -- ash
+```
 
-/ # wget --timeout 1 -O- http://www.example.com
+# In container run:
+```
+wget --timeout 1 -O- http://www.example.com
+```
+
+```
 Connecting to www.example.com (93.184.216.34:80)
 wget: download timed out
 ```

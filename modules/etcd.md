@@ -45,6 +45,11 @@ etcd, as most of the kubernetes system components, runs inside a static pod. Thi
     etcdctl get /registry/pods/kube-system/<pod-name>
     ```
 
+    # Piping over to jq
+    ```
+    kubectl --namespace kube-system exec -it etcd-server-master-us-west1-c-ABCD -- etcdctl get /registry/pods/default/<mypod>|jq 
+    ```
+
 ### Exercise 2: Backup etcd 
 
 1. Follow the instructions in the etcd documentation to create an etcd backup. [Reference link](https://coreos.com/etcd/docs/latest/v2/admin_guide.html#disaster-recovery) 
