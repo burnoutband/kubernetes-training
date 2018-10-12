@@ -12,8 +12,8 @@ Objectives
 Pre-requisites
 --------------
 
-- enable pod security policies (PSP)
-- enable network security policy
+- [enable pod security policies (PSP)](enable_psp_on_kops.md) 
+- enable network security policy (The default cni used does not support network policies)
 
 Pod Security Policy
 -------------------
@@ -93,6 +93,7 @@ rules:
   - restricted
   verbs:
   - use
+```
 
 ```
 kubectl apply -f role.yaml
