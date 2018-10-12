@@ -230,7 +230,7 @@ Now start the pod that matches label `app=foo`
 kubectl run --rm --restart=Never --image=alpine -i -t -l app=foo test -- ash
 ```
 
-# In container run:
+In container run:
 ```
 wget --timeout 1 -O- http://www.example.com
 ```
