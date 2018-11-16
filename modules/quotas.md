@@ -25,7 +25,7 @@ spec:
 3. Create the resource quota
 
 ```
-kubectl apply -f quota-pod.yaml`
+kubectl apply -f quota-pod.yaml --namespace=quota-01
 ```
 
 4. Get information about created quota
@@ -57,7 +57,7 @@ spec:
 ```
 
 ```
-kubectl apply -f quota-deployment.yaml
+kubectl apply -f quota-deployment.yaml --namespace=quota-01
 ```
 
 6. Now check the status of the Deployment
@@ -78,7 +78,7 @@ status:
 7. Delete the deployment
 
 ```
-kubectl delete deployment pod-quota-demo
+kubectl delete deployment pod-quota-demo --namespace=quota-01
 ```
 
 ## Exercise 02: limit the CPU & memory available for a namespace
@@ -99,10 +99,9 @@ spec:
 ```
 
 ```
-kubectl apply quota-mem-cpu.yaml
+kubectl apply -f quota-mem-cpu.yaml --namespace=quota-01
 ```
 2. Every container must have a memory request, memory limit, cpu request, and cpu limit. Try to create a pod without these specs and see the error.
-
 
 ```file=quota-pod.yaml
 apiVersion: v1
@@ -116,7 +115,7 @@ spec:
 ```
 
 ```
-kubectl apply -f quota-pod.yaml
+kubectl apply -f quota-pod.yaml --namespace=quota-01
 ```
 
 3. Now let's specify the limits for the pod and try to create it again
@@ -140,7 +139,7 @@ spec:
 ```
 
 ```
-kubectl apply -f quota-pod.yaml
+kubectl apply -f quota-pod.yaml --namespace=quota-01
 ```
 
 The pod is created.
@@ -169,7 +168,7 @@ status:
 apiVersion: v1
 kind: Pod
 metadata:
-  name: quota-mem-cpu-demo
+  name: quota-mem-cpu-demo-2
 spec:
   containers:
   - name: quota-mem-cpu-demo-ctr
@@ -184,7 +183,7 @@ spec:
 ```
 
 ```
-kubectl apply -f quota-pod2.yaml
+kubectl apply -f quota-pod2.yaml --namespace=quota-01
 ```
 
 6. Delete all running pods in the namespace
@@ -210,7 +209,7 @@ spec:
 ```
 
 ```
-kubectl apply -f limit-range.yaml
+kubectl apply -f limit-range.yaml --namespace=quota-01
 ```
 
 2. Create a pod without specifying limits and requests
@@ -227,7 +226,7 @@ spec:
 ```
 
 ```
-kubectl apply -f pod.yaml
+kubectl apply -f pod.yaml --namespace=quota-01
 ```
 
 3. Check the limits for created pod

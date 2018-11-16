@@ -5,7 +5,7 @@
 ```
 kops edit cluster
 ```
-Add to the bottom of the `spec` section and save.
+Add to the bottom of the `spec` section and save. Note: Use correct indentation of `kubeAPIServer`.
 ```
   kubeAPIServer:
     admissionControl:

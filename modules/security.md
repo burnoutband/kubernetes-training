@@ -1,22 +1,17 @@
-Security
-========
+# Security
 
-Objectives
-----------
+## Objectives
 
+- Implement PSP to limit container capabilities
+- Implement network policy to limit interactions between pods
+- Implement image security scanning to prevent using outdated versions of the base image
 
-- implement PSP to limit container capabilities
-- implement network policy to limit interactions between pods
-- implement image security scanning to prevent using outdated versions of the base image
+## Pre-requisites
 
-Pre-requisites
---------------
+- [Enable pod security policies (PSP)](enable_psp_on_kops.md)
+- Use CNI weave/calico networking instead of kubenet
 
-- [enable pod security policies (PSP)](enable_psp_on_kops.md) 
-- enable network security policy (The default cni used does not support network policies)
-
-Pod Security Policy
--------------------
+## Exercise 01: Pod Security Policy
 
 Create a PSP file called `psp.yaml`:
 
@@ -77,7 +72,6 @@ kubectl apply -f psp.yaml
 
 Typically `Pods` are created by `Deployments`, `ReplicaSets`, not by the user directly. We need to grant permissions for using this policy to the default account.
 
-
 Create a role called `role.yaml`:
 ```
 kind: ClusterRole
@@ -99,7 +93,7 @@ rules:
 kubectl apply -f role.yaml
 ```
 
-Create rolebinding `bind.yaml`:
+Create rolebinding `binding.yaml`:
 ```
 apiVersion: rbac.authorization.k8s.io/v1beta1
 kind: RoleBinding
@@ -192,8 +186,7 @@ EOF
 
 Try it and explain the result.
 
-Network policy
---------------
+## Exercise 02: Network Policy
 
 Let's see how to use network policy for blocking the external traffic for a `Pod`
 
@@ -241,3 +234,17 @@ wget: download timed out
 ```
 
 You see the name resolution works fine but external connections are dropped.
+
+### Cleanup
+
+1. Delete the network policy and role binding
+    ```
+    kubectl delete -f deny-egress.yaml
+    kubectl delete -f binding.yaml
+    ```
+1. Disable PSPs on the cluster
+    ```
+    kops edit cluster # Remove kubeAPIServer
+    kops update cluster --yes
+    kops rolling-update cluster --yes
+    ```
