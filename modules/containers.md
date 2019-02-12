@@ -1,10 +1,6 @@
 ## Creating and running containers
 
-### Prerequisites: Install Docker
-
-1. Follow the [official documentation](https://docs.docker.com/install/) to install docker on your platform.
-
-Note: Windows 10 Pro is required, Docker will not work on Windows 10 Home due to Hyper-V requirements.
+We will be using cloud shell that has docker already installed.
 
 ### Exercise 1: Creating a custom image.
 
@@ -20,7 +16,9 @@ Note: Windows 10 Pro is required, Docker will not work on Windows 10 Home due to
     apt-get install -y nginx
     ```
 
-1. In a separate terminal window list all running containers. Copy `CONTAINER ID` field.
+1. Cloud shell is integrated with tmux, if you want to learn a little more you can run `ctrl-b ?`, but for next exercise you can use `ctrl-b %` to split terminal and `ctrl-b ;` to move from one window pane to the other.  
+
+1. In a separate terminal window or split pane inside of tmux list all running containers. Copy `CONTAINER ID` field.
     ```
     docker ps
     ```
@@ -51,8 +49,13 @@ Note: Windows 10 Pro is required, Docker will not work on Windows 10 Home due to
     * `-p 8080:80` - map port `80` in the container to port `8080` on the host system.
     * `my-image` - run image `my-image`
     * `nginx -g 'daemon off;'` - start nginx in foreground mode. Without `daemon off` parameter nginx will start in a background process, and the command finishes immediately. After start command finishes, container will be killed.
+    * For further reference to this command and ones we will be running next you can look here, [Docker run](https://docs.docker.com/engine/reference/run/).
 
-1. Open `http://localhost:8080` in your web browser and make sure that nginx is available.
+1. Use cloud shell web preview, it is at top right of cloud shell window, or you can use split window like we did above and run `curl http://localhost:8080`. You should now see nginx page.
+
+    ![](img/webpreview.png)
+
+1. Stop docker process, `ctrl-c`.  
 
 ### Exercise 3: Mapping volumes.
 
@@ -60,15 +63,16 @@ Note: Windows 10 Pro is required, Docker will not work on Windows 10 Home due to
     ```
     docker run -it -p 8080:80 -v /tmp/html:/var/www/html my-image nginx -g 'daemon off;'
     ```
-    Windows:
-    ```
-    docker run -it -p 8080:80 -v c:/tmp/html:/var/www/html my-image nginx -g "daemon off;"
-    ```
 
     Here we are mapping `/tmp/html` folder on the host machine to the `/var/www/html` folder inside the container.
 
 1. Save the following file as `index.html` inside `/tmp/html` folder on your local machine.
     ```
+    sudo chmod g+w /tmp/html; sudo chgrp $(id -g) /tmp/html
+    ```
+
+    ```
+    cat > /tmp/html/index.html <<EOF
     <!DOCTYPE html>
     <html>
     <body>
@@ -79,18 +83,24 @@ Note: Windows 10 Pro is required, Docker will not work on Windows 10 Home due to
 
     </body>
     </html>
+    EOF
     ```
 
-1. Open `http://localhost:8080/` and make sure that the content of the previously created file is displayed.
+1. Use cloud shell web preview, it is at top right of cloud shell window, or you can use split window like we did above and run `curl http://localhost:8080`. You should now see nginx page.
 
 ### Exercise 4 (Optional): Dockerfiles.
 
-Docker can build images automatically by reading instructions from a script. It is generally best practice to use Dockerfiles to easily update, maintain, modify and recreate containers.
+Docker can build images automatically by reading instructions from a script. It is generally best practice to use Dockerfiles to easily update, maintain, modify and recreate containers, [Dockerfile Reference](https://docs.docker.com/engine/reference/builder/).
 
 In this exercise, we will create a Docker image with Nginx and PHP-FPM 7 using an Ubuntu 16.04 docker image. Additionally, we need Supervisord, so we can start Nginx and PHP-FPM 7 both in one command.
 
 1. Save the following file as `Dockerfile` inside `/tmp/docker-exercise4`
     ```
+    mkdir /tmp/docker-exercise4
+    ```
+
+    ```
+    cat > /tmp/docker-exercise4/Dockerfile <<EOF  
     #Download base image ubuntu 16.04
     FROM ubuntu:16.04
 
@@ -114,12 +124,12 @@ In this exercise, we will create a Docker image with Nginx and PHP-FPM 7 using a
     ENV supervisor_conf /etc/supervisor/supervisord.conf
 
     # Enable php-fpm on nginx virtualhost configuration
-    COPY default ${nginx_vhost}
-    RUN sed -i -e 's/;cgi.fix_pathinfo=1/cgi.fix_pathinfo=0/g' ${php_conf} && \
-        echo "\ndaemon off;" >> ${nginx_conf}
+    COPY default \${nginx_vhost}
+    RUN sed -i -e 's/;cgi.fix_pathinfo=1/cgi.fix_pathinfo=0/g' \${php_conf} && \
+        echo "\ndaemon off;" >> \${nginx_conf}
 
     # Copy supervisor configuration
-    COPY supervisord.conf ${supervisor_conf}
+    COPY supervisord.conf \${supervisor_conf}
 
     RUN mkdir -p /run/php && \
         chown -R www-data:www-data /var/www/html && \
@@ -133,10 +143,12 @@ In this exercise, we will create a Docker image with Nginx and PHP-FPM 7 using a
     CMD ["./start.sh"]
 
     EXPOSE 80 443
+    EOF
     ```
 
 1. Save the following file as `default` inside `/tmp/docker-exercise4`, this is the nginx virtual host file
     ```
+    cat > /tmp/docker-exercise4/default <<EOF
     server {
         listen 80 default_server;
         listen [::]:80 default_server;
@@ -155,10 +167,12 @@ In this exercise, we will create a Docker image with Nginx and PHP-FPM 7 using a
             fastcgi_pass unix:/run/php/php7.0-fpm.sock;
         }
     }
+    EOF
     ```
 
 1. Save the following file as `supervisord.conf` inside `/tmp/docker-exercise4`, this is the supervisord configuration file
     ```
+    cat > /tmp/docker-exercise4/supervisord.conf <<EOF
     [unix_http_server]
     file=/dev/shm/supervisor.sock   ; (the path to the socket file)
 
@@ -194,12 +208,15 @@ In this exercise, we will create a Docker image with Nginx and PHP-FPM 7 using a
     numprocs=1
     autostart=true
     autorestart=true
+    EOF
     ```
 
 1. Save the following file as `start.sh` inside `/tmp/docker-exercise4`, this is the script that is run when the container is created from the image
     ```
+    cat > /tmp/docker-exercise4/start.sh <<EOF
     #!/bin/sh
     /usr/bin/supervisord -n -c /etc/supervisor/supervisord.conf
+    EOF
     ```
 
 1. Make the startup script executable
@@ -216,19 +233,17 @@ In this exercise, we will create a Docker image with Nginx and PHP-FPM 7 using a
 
 1. Save the following file as `info.php` inside `/tmp/html` folder on your local machine.
     ```
-    echo '<?php phpinfo(); ?>' > /webroot/info.php
+    cat > /tmp/html/info.php <<EOF
+    <?php phpinfo(); ?>
+    EOF
     ```
 
 1. Run the docker image
     ```
     docker run -it -p 3000:80 -v /tmp/html:/var/www/html --name test custom_nginx_image
     ```
-    Windows:
-    ```
-    docker run -it -p 3000:80 -v c:/tmp/html:/var/www/html --name test custom_nginx_image
-    ```
 
-1. Open `http://localhost:3000/info.php` in your web browser and make verify that nginx and php is working.
+1. Web preview will not work for this because of some redirects, so run `curl http://localhost:3000/info.php`. This should verify that nginx and php is working.
 
 When creating Dockerfiles there are [several best practices](https://docs.docker.com/v17.09/engine/userguide/eng-image/dockerfile_best-practices/) which should always be followed.
 
@@ -243,3 +258,6 @@ When creating Dockerfiles there are [several best practices](https://docs.docker
 1. Inspect the docker container (`docker inspect <container-id>`) and find its IP
 1. Make sure you understand the difference between [host](https://docs.docker.com/network/host/) and default [bridge](https://docs.docker.com/network/bridge/) networks.
 
+---
+
+Next: [Kubernetes Operations (kops)](kops.md)
