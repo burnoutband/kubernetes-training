@@ -167,7 +167,7 @@ stackdriver.googleapis.com  Stackdriver API
 Clone the lab repository in your cloud shell, then `cd` into that directory:
 
 ```shell
-git clone https://github.com/Altoros/k8s-training-jan2019.git
+git clone https://github.com/Altoros/kubernetes-training.git
 ```
 ```shell
 cd k8s-training-jan2019
