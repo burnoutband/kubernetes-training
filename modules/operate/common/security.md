@@ -8,7 +8,7 @@
 
 ## Pre-requisites
 
-- [Enable pod security policies (PSP)](enable_psp_on_kops.md)
+- Enable pod security policies (PSP)
 - Use CNI weave/calico networking instead of kubenet
 
 ## Exercise 01: Pod Security Policy
