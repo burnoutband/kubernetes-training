@@ -1,4 +1,4 @@
-# Sidecars and Init Containers
+# Affinity and Anti-affinity
 
 ## Module Objectives
 

@@ -1,0 +1,40 @@
+Program for the Washington, DC public training - April 2019
+====================================================
+
+* **Day 1**
+    1. [GCP Cloud Setup](../modules/prerequisites/gcp/gcp-get-started.md)
+    1. [Creating and running containers](../modules/misc/containers-v2.md)
+    1. [Pods](../modules/operate/v2/01-pods.md)
+    1. [Services](../modules/operate/v2/02-services.md)
+    1. [Secrets and ConfigMaps](../modules/operate/v2/03-secrets-and-config-maps.md)
+    1. [Sidecars and Init Containers](../modules/operate/v2/04-sidecars.md)
+    1. [Affinity and Anti-affinity](../modules/operate/v2/05-affinity.md)
+    1. [Pod Limits](../modules/operate/v2/06-limits.md)
+* **Day 2**
+    1. [Deployments](../modules/operate/v2/07-deployments.md)
+    1. [Health Checks](../modules/operate/v2/08-health-checks.md)
+    1. [Autoscaling](../modules/operate/v2/09-autoscaling.md)
+    1. [Jobs](../modules/operate/v2/10-jobs.md)
+    1. [Persistence](../modules/operate/v2/11-persistence.md)
+    1. [StatefulSet](../modules/operate/v2/12-stateful-set.md)
+    1. [Ingress](../modules/operate/v2/13-ingress.md)
+* **Day 3**
+    1. [Kubeadm](../modules/deploy/kubeadm/kubeadm.md)
+    1. [Kubelet](../modules/internals/kubelet.md)
+    1. [API Server](../modules/internals/api.md)
+    1. [etcd](../modules/internals/etcd.md)
+    1. [Scheduler](../modules/internals/scheduler.md)
+    1. [CNI Networking](../modules/internals/networking.md)
+* **Day 4**
+    1. [Helm](../modules/misc/helm.md)
+    1. [Istio](../modules/misc/istio.md)
+    1. [Pod Security Policy](../modules/deploy/kubeadm/security-kubeadm.md)
+    1. [Network Policies](../modules/operate/common/network-policy.md)
+    1. [Deploy Jenkins](../modules/ci_cd/jenkins/deploy-jenkins.md)
+    1. [Pipeline Prerequisites](../modules/ci_cd/jenkins/pipeline-prereq.md)
+    1. [Build Pipeline](../modules/ci_cd/jenkins/build-pipeline.md)
+    1. [Test Pipeline](../modules/ci_cd/jenkins/test-pipeline.md)
+    1. [Deployment Pipeline](../modules/ci_cd/jenkins/deploy-pipeline.md)
+    1. [Canary](../modules/ci_cd/jenkins/canary.md)
+    1. [Development Branch](../modules/ci_cd/jenkins/dev-branch.md)
+    1. [Rollback](../modules/ci_cd/jenkins/roll-back.md)

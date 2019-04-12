@@ -1,12 +1,8 @@
-# Deployments and Health Checks
+# Health Checks
 
 ## Module Objectives
 
-- Convert a pod to a deployment
-- Scale/update/rollout/rollback the deployment
 - Define custom health checks and liveness probes
-- Use horizontal pod autoscaler
-- Use jobs and cronJobs to schedule task execution
 
 ---
 ## Define Custom Health Checks and Liveness Probes
