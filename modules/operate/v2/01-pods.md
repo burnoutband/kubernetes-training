@@ -13,7 +13,7 @@ In this section, you will deploy the mysql database, `gceme` frontend and backen
 1. First change directories to the sample-app.
 
     ```shell
-    cd google-k8s-workshop-v2/sample-app
+    cd kubernetes-training/sample-app
     ```
 
 1. Create the manifest to deploy the `db` MySQL Pod. Save the following as `manifests/db.yaml`:

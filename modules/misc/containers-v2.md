@@ -47,13 +47,13 @@ A deployment is a supervisor for pods and replica sets, giving you fine-grained 
 
 1. Open the [GCP Console](https://console.cloud.google.com) from your browser and then open the Cloud Shell.
 
-1. Navigate to the `google-k8s-workshop-v2/sample-app` folder.
+1. Navigate to the `kubernetes-training/sample-app` folder.
 
     ```shell
-    cd google-k8s-workshop-v2/sample-app
+    cd kubernetes-training/sample-app
     ```
 
-    > Note: `google-k8s-workshop-v2` repository should be cloned in the previous exercise.
+    > Note: `kubernetes-training` repository should be cloned in the previous exercise.
 
 1. Set the `IMAGE` environment variable and build the Docker image.
 
@@ -72,7 +72,7 @@ A deployment is a supervisor for pods and replica sets, giving you fine-grained 
 
     * `docker build` command packages the application into a docker container. It does the following steps:
 
-      * Reads the [Dockerfile](https://github.com/Altoros/google-k8s-workshop-v2/blob/master/sample-app/Dockerfile#L15)
+      * Reads the [Dockerfile](https://github.com/Altoros/kubernetes-training/blob/master/sample-app/Dockerfile#L15)
       * Creates a new container from the base image specified in the Dockerfile
       * Runs all commands from the Dockerfile
       * Saves the container filesystem as a new Docker image
