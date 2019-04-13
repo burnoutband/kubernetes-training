@@ -86,34 +86,6 @@ A deployment is a supervisor for pods and replica sets, giving you fine-grained 
 
 1. In GCP console open 'Container Registry' -> 'Images' and make sure that `sample-k8s-app` image is present.
 
-## Use Cloud Build to Automatically Build the Container for you
-
-Cloud Build is a service that executes your builds on Google Cloud Platform infrastructure. Cloud Build can import source code from Google Cloud Storage, Cloud Source Repositories, GitHub, or Bitbucket. It can execute a build to your specifications and produce artifacts such as Docker containers or Java archives.
-
-Now let's create a cloud build that will do this for us, instead of manually building the image and pushing it to the container registry.
-
-1. In the `sample-app` folder create the file `cloudbuild.yaml` file with the following content.
-
-    ```yaml
-    steps:
-    - name: 'gcr.io/cloud-builders/docker'
-      args: [ 'build', '-t', 'gcr.io/$PROJECT_ID/sample-k8s-app', '.' ]
-    images:
-    - 'gcr.io/$PROJECT_ID/sample-k8s-app'
-    ```
-
-    This is a Cloud Build configuration file that contains a single step: building the `sample-k8s-app` image. The build is taking place in a container that is created from `gcr.io/cloud-builders/docker` image. The command that we use to build our own image is almost identical to the one that we used in the previous exercise. The configuration file also contains the `images` section. This section instructs the Cloud Build to push the image to the GCE Container Registry.
-
-1. Submit the build.
-
-    ```shell
-    gcloud builds submit --config cloudbuild.yaml .
-    ```
-
-1. In GCP console open 'Cloud Build' -> 'History' and verify that the build was successfully finished.
-
-1. In GCP console open 'Container Registry' -> 'Images' and make sure that `sample-k8s-app` was recently updated.
-
 ## Run the Application in the Cloud Shell
 
 1. Run the database container.
