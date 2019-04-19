@@ -24,6 +24,7 @@ import (
 	"io"
 	"io/ioutil"
 	"log"
+	"math/rand"
 	"net"
 	"net/http"
 	"net/http/httputil"
@@ -35,19 +36,20 @@ import (
 )
 
 type Instance struct {
-	Id         string
-	Name       string
-	Version    string
-	Hostname   string
-	Zone       string
-	Project    string
-	InternalIP string
-	ExternalIP string
-	LBRequest  string
-	ClientIP   string
-	Local      bool
-	Notes      []string
-	Error      string
+	Id          string
+	Name        string
+	Version     string
+	Hostname    string
+	Zone        string
+	Project     string
+	ContainerIP string
+	InternalIP  string
+	ExternalIP  string
+	LBRequest   string
+	ClientIP    string
+	Local       bool
+	Notes       []string
+	Error       string
 }
 
 type Note struct {
@@ -61,13 +63,15 @@ const dbName = "sample_app"
 
 func main() {
 	showversion := flag.Bool("version", false, "display version")
-	frontend := flag.Bool("frontend", false, "run in frontend mode")
+	mode := flag.String("mode", "", "frontend|backend")
+	migrate := flag.Bool("run-migrations", false, "create db and run migrations")
 	delay := flag.Int("delay", 0, "number of seconds to sllep on before start")
 	port := flag.Int("port", 8080, "port to bind")
 	backend := flag.String("backend-service", "http://127.0.0.1:8081", "hostname of backend server")
 	dbHost := flag.String("db-host", "db", "hostname of DB server")
 	dbUser := flag.String("db-user", "root", "DB username")
 	dbPassword := flag.String("db-password", "root", "DB password")
+	failPercent := flag.Int("fail-percent", 0, "A percent indicating how often the app will fail, applies only to backend")
 	flag.Parse()
 
 	if *showversion {
@@ -83,34 +87,63 @@ func main() {
 		fmt.Fprintf(w, "%s\n", version)
 	})
 
-	if *frontend {
+	if *mode == "frontend" {
 		frontendMode(*port, *backend)
-	} else {
+	} else if *mode == "backend" {
 		db, err := gorm.Open("mysql", fmt.Sprintf("%s:%s@tcp(%s)/mysql", *dbUser, *dbPassword, *dbHost))
 		if err != nil {
 			log.Fatal(err)
 		}
-		err = db.Exec(fmt.Sprintf("CREATE DATABASE IF NOT EXISTS %s", dbName)).Error
-		if err != nil {
-			log.Fatal(err)
-		}
-		db, err = gorm.Open("mysql", fmt.Sprintf("%s:%s@tcp(%s)/%s?charset=utf8&parseTime=True&loc=Local", *dbUser, *dbPassword, *dbHost, dbName))
-		if err != nil {
-			log.Fatal(err)
-		}
-		err = db.AutoMigrate(&Note{}).Error
-		if err != nil {
-			log.Fatal(err)
+		if *migrate {
+			db, err = createDbAndMigrate(db, *dbUser, *dbPassword, *dbHost)
+			if err != nil {
+				log.Fatal(err)
+			}
+		} else {
+	    db, err = gorm.Open("mysql", fmt.Sprintf("%s:%s@tcp(%s)/%s?charset=utf8&parseTime=True&loc=Local", *dbUser, *dbPassword, *dbHost, dbName))
+	    if err != nil {
+			  log.Fatal(err)
+	    }
 		}
 		defer db.Close()
-		backendMode(*port, db)
+		backendMode(*port, db, *failPercent)
+	} else if *mode == "" && *migrate {
+		db, err := gorm.Open("mysql", fmt.Sprintf("%s:%s@tcp(%s)/mysql", *dbUser, *dbPassword, *dbHost))
+		if err != nil {
+			log.Fatal(err)
+		}
+		db, err = createDbAndMigrate(db, *dbUser, *dbPassword, *dbHost)
+		if err != nil {
+			log.Fatal(err)
+		}
+		db.Close()
+	} else {
+		log.Fatal(fmt.Sprintf("Unknown mode: %s, should be either backend or frontend", *mode))
 	}
 
 }
 
-func backendMode(port int, db *gorm.DB) {
+func createDbAndMigrate(db *gorm.DB, user, password, host string) (*gorm.DB, error) {
+	err := db.Exec(fmt.Sprintf("CREATE DATABASE IF NOT EXISTS %s", dbName)).Error
+	if err != nil {
+		return db, err
+	}
+	db, err = gorm.Open("mysql", fmt.Sprintf("%s:%s@tcp(%s)/%s?charset=utf8&parseTime=True&loc=Local", user, password, host, dbName))
+	if err != nil {
+		return db, err
+	}
+	return db, db.AutoMigrate(&Note{}).Error
+}
+
+func backendMode(port int, db *gorm.DB, failPercent int) {
 	log.Println("Operating in backend mode...")
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		n := rand.Intn(100)
+		if n < failPercent {
+			w.WriteHeader(http.StatusServiceUnavailable)
+			log.Println("Failure generated")
+			return
+		}
 		i := newInstance(db)
 		raw, _ := httputil.DumpRequest(r, true)
 		i.LBRequest = string(raw)
@@ -144,7 +177,6 @@ func backendMode(port int, db *gorm.DB) {
 
 	})
 	log.Fatal(http.ListenAndServe(fmt.Sprintf(":%v", port), nil))
-
 }
 
 func frontendMode(port int, backendURL string) {
@@ -155,16 +187,17 @@ func frontendMode(port int, backendURL string) {
 	}
 	tpl := template.Must(template.New("out").Parse(string(html)))
 
-	transport := http.Transport{DisableKeepAlives: false}
+	transport := http.Transport{DisableKeepAlives: true}
 	client := &http.Client{Transport: &transport}
-	req, _ := http.NewRequest(
-		"GET",
-		backendURL,
-		nil,
-	)
-	req.Close = false
 
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		req, _ := http.NewRequest(
+			"GET",
+			backendURL,
+			nil,
+		)
+		req.Header = r.Header // forward headers
+		req.Close = true
 		i := &Instance{}
 		resp, err := client.Do(req)
 		if err != nil {
@@ -179,6 +212,7 @@ func frontendMode(port int, backendURL string) {
 			fmt.Fprintf(w, "Error: %s\n", err.Error())
 			return
 		}
+		log.Printf("Backend response: %s", body)
 		err = json.Unmarshal([]byte(body), i)
 		if err != nil {
 			w.WriteHeader(http.StatusInternalServerError)
@@ -189,6 +223,11 @@ func frontendMode(port int, backendURL string) {
 	})
 
 	http.HandleFunc("/healthz", func(w http.ResponseWriter, r *http.Request) {
+		req, _ := http.NewRequest(
+			"GET",
+			backendURL,
+			nil,
+		)
 		resp, err := client.Do(req)
 		if err != nil {
 			w.WriteHeader(http.StatusServiceUnavailable)
@@ -206,6 +245,8 @@ func frontendMode(port int, backendURL string) {
 			backendURL+"/add-note",
 			r.Body,
 		)
+		req.Header = r.Header // forward headers
+		req.Close = true
 		resp, err := client.Do(req)
 		if err != nil {
 			w.WriteHeader(http.StatusServiceUnavailable)
@@ -276,6 +317,7 @@ func newInstance(db *gorm.DB) *Instance {
 	i.Name = a.assign(metadata.InstanceName)
 	i.Hostname = a.assign(metadata.Hostname)
 	i.Project = a.assign(metadata.ProjectID)
+	i.ContainerIP = GetOutboundIP().String()
 	i.InternalIP = a.assign(metadata.InternalIP)
 	i.ExternalIP = a.assign(metadata.ExternalIP)
 	i.Version = version
