@@ -170,7 +170,7 @@ Clone the lab repository in your cloud shell, then `cd` into that directory:
 git clone https://github.com/Altoros/kubernetes-training.git
 ```
 ```shell
-cd k8s-training-jan2019
+cd kubernetes-training
 ```
 
 ---
