@@ -173,6 +173,3 @@ git clone https://github.com/Altoros/kubernetes-training.git
 cd kubernetes-training
 ```
 
----
-
-Next: [Containers](containers.md)
