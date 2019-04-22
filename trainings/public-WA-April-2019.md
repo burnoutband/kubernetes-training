@@ -4,6 +4,7 @@ Program for the Washington, DC public training - April 2019
 * **Day 1**
     1. [GCP Cloud Setup](../modules/prerequisites/gcp/gcp-get-started.md)
     1. [Creating and running containers](../modules/misc/containers-v2.md)
+    1. [Create a Kubernetes Cluster](../modules/deploy/gke/create-gke-cluster.md)
     1. [Pods](../modules/operate/v2/01-pods.md)
     1. [Services](../modules/operate/v2/02-services.md)
     1. [Secrets and ConfigMaps](../modules/operate/v2/03-secrets-and-config-maps.md)
