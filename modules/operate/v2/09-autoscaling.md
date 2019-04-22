@@ -64,3 +64,8 @@ Now we will use the horizontal autoscaler to automatically set the number of bac
     ```
 
 
+## Optional Exercises
+
+###  Vertical autoscaling 
+
+Try to configure and test [vertical pod autoscaling](https://cloud.google.com/kubernetes-engine/docs/how-to/vertical-pod-autoscaling)

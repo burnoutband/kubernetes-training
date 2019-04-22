@@ -42,11 +42,11 @@ Kubernetes cluster consists of two types of nodes. Master nodes coordinate conta
 1. Create a cluster running two `n1-standard-2` worker nodes
 
     ```shell
-    gcloud container clusters create jenkins-cd \
+    gcloud container clusters create k8s-training \
     --num-nodes 2 \
     --machine-type n1-standard-2 \
     --cluster-version 1.11.6-gke.3 \
-    --labels=project=jenkins-workshop \
+    --labels=project=k8s-training \
     --image-type COS \
     --enable-autorepair \
     --no-enable-basic-auth \
@@ -59,9 +59,9 @@ Kubernetes cluster consists of two types of nodes. Master nodes coordinate conta
 1. Get credentials for the cluster
 
     ```console
-    $ gcloud container clusters get-credentials jenkins-cd
+    $ gcloud container clusters get-credentials k8s-training
     Fetching cluster endpoint and auth data.
-    kubeconfig entry generated for jenkins-cd.
+    kubeconfig entry generated for k8s-training.
     ```
 
 1. Verify that you can connect to the cluster and list the nodes

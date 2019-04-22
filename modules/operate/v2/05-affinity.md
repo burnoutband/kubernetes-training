@@ -66,3 +66,9 @@ By default the Kubernetes scheduler will try to evenly distribute pods between n
     frontend   1/1       Running   0          5m        10.48.1.31   gke-gke-workshop-0-default-pool-c70d26ac-gvpw
     ```
 
+## Optional Exercises
+
+### Use sidecar containers
+
+1. Pick a node and assign a label to it.
+1. Use [node affinity](https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#node-affinity-beta-feature) to prefer allocating gceme pods on the selected node.

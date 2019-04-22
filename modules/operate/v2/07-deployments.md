@@ -165,3 +165,9 @@ There are a couple of problems with our current setup.
     ```
 
 1. Make sure the application now shows version `1.0.0` instead of `1.0.1`.
+
+## Optional Exercises
+
+### Configure rollover parameters
+
+Set [Max Unavailable](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/#max-unavailable) and [Max Surge](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/#max-surge) parameters to non default values. observe what changes in the rollower process.

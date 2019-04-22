@@ -122,3 +122,14 @@ In this section, you will deploy the mysql database, `gceme` frontend and backen
     ```
 
 
+## Optional Exercises
+
+### Deploy a pod using different image.
+
+Create a pod that runs [nginx](https://hub.docker.com/_/nginx) image. Try to access nginx.
+
+### Manually connect to mysql DB from app pod
+
+1. Go inside the backend pod. (Use [exec](https://kubernetes.io/docs/tasks/debug-application-cluster/get-shell-running-container/) command to do that)
+1. Use `mysql-client` package to install [mysql](https://dev.mysql.com/doc/refman/8.0/en/mysql.html)
+1. Use `mysql` to connect to the DB.

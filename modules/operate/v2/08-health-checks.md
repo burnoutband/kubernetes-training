@@ -43,3 +43,9 @@ For this exercise, we will use only a `readinessProbe`.
     This section should go under `spec -> template -> spec -> containers[name=backend]` and should be aligned with `image`, `env` and `command` properties.
 
 1. Run `watch kubectl get pod` to see how Kubernetes is rolling out your Pods. This time it will do it much slower, making sure that previous Pods are ready before starting a new set of Pods.
+
+## Optional Exercises
+
+###  Health Checks
+
+Define a HTTP healthcheck for the backend app. Convert the healthcheck to Container Exec and TCP. Verify that each type of healthcheck is working corectly.

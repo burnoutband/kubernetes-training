@@ -93,3 +93,10 @@ First, let's verify that right now this is the case.
     stress: WARN: [226] (417) now reaping child worker processes
     stress: FAIL: [226] (451) failed run completed in 1s
     ```
+
+
+## Optional Exercises
+
+### Limit CPU
+
+Set CPU limit and try to use 'stress' to overcome it. 

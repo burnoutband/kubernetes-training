@@ -4,10 +4,6 @@
 
 1. Use Services and service discovery
 1. Use LoadBalancer services
-1. Use Secrets and ConfigMaps to externalize application credentials and configuration
-1. Use sidecars and init containers
-1. Use pod/node affinity and anti-affinity
-1. Set pod limits
 
 ---
 ## Use Services and Service Discovery
@@ -163,3 +159,13 @@ Next thing we have to do is to expose the app to the external world. We can use 
 1. In GCP Cloud Console, find and investigate the external IP address that the `LoadBalancer` service type created
     * VPC Network -> External IP addresses
 
+
+## Optional Exercises
+
+### Blue green deployment
+
+1. Assign label "app=blue" to the frontend pod.
+1. Modify frontend service selector to use the label "app=blue"  
+1. Deploy a second frontend with label "app=green". The second pod should contain the same application. (in a real scenario this should be a different version of the app, but for your example, you can use exactly the same app)
+1. [Exec](https://kubernetes.io/docs/tasks/debug-application-cluster/get-shell-running-container/) inside the second pod and modify [this](../../../../sample-app/templates/base.html) file. Replace all occurrences of the word "blue" by "orange" (this should change interface color) 
+1. Change service selector to "app=green" and make sure that now the service switched to the second pod.

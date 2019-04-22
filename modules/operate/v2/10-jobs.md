@@ -78,3 +78,8 @@ Sometimes there is a need to run one-off tasks. You can use Pods to do that, but
     kubectl delete cronjob backup
     ```
 
+## Optional Exercises
+
+###  Use jobs
+
+Use Job instead of CronJob to run the backup only once. 

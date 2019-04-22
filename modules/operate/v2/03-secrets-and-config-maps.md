@@ -45,3 +45,8 @@ One major problem with our current deployment is that we hardcoded the MySQL roo
 
 1. Refresh the frontend and make sure that the app is still working fine.
 
+## Optional Exercises
+
+### ConfigMaps
+
+1. Create a config map with a key that contains port for the backetd. Use the value from the config map in the backend startup command.

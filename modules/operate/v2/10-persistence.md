@@ -5,7 +5,6 @@
 1. Use Persistent Volumes to store data
 1. Convert a Persistent Volume to Persistent Volume Claim
 1. Create a Storage Class
-1. Use StatefulSet to deploy a mysql galera cluster
 
 ---
 
