@@ -25,8 +25,8 @@ Program for the Washington, DC public training - April 2019
     1. [API Server](../modules/internals/api.md)
     1. [etcd](../modules/internals/etcd.md)
     1. [Scheduler](../modules/internals/scheduler.md)
-    1. [Manage infrastructure using terraform](../modules/terraform-troubleshooting.md)
-    1. [CNI Networking](../modules/internals/networking.md)
+    1. [Manage infrastructure using terraform](../modules/deploy/kops/terraform-troubleshooting.md)
+    1. [CNI Networking](../modules/internals/cni-networking.md)
 * **Day 4**
     1. [Helm](../modules/misc/helm.md)
     1. [Istio](../modules/misc/istio.md)
