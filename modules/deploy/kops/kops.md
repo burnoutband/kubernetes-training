@@ -132,6 +132,3 @@
     * Network services -> Load balancing
     We will examine all created infrastructure in details on day 3.
 
----
-
-Next: [Pods](pods.md)

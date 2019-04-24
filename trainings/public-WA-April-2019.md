@@ -20,11 +20,12 @@ Program for the Washington, DC public training - April 2019
     1. [StatefulSet](../modules/operate/v2/12-stateful-set.md)
     1. [Ingress](../modules/operate/v2/13-ingress.md)
 * **Day 3**
-    1. [Kubeadm](../modules/deploy/kubeadm/kubeadm.md)
+    1. [Installing a Kubernetes Cluster on GCP with Kubernetes Operations (kops)](../modules/deploy/kops/kops.md)
     1. [Kubelet](../modules/internals/kubelet.md)
     1. [API Server](../modules/internals/api.md)
     1. [etcd](../modules/internals/etcd.md)
     1. [Scheduler](../modules/internals/scheduler.md)
+    1. [Manage infrastructure using terraform](../modules/terraform-troubleshooting.md)
     1. [CNI Networking](../modules/internals/networking.md)
 * **Day 4**
     1. [Helm](../modules/misc/helm.md)
