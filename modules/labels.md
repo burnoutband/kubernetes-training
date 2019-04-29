@@ -35,7 +35,10 @@ A label is a key-value pair that is meaningful and relevant to users with certai
 
     ```console
     kubectl get pods --show-labels
+    ```
 
+    Output:
+    ```console
     NAME       READY     STATUS    RESTARTS   AGE    LABELS
     label-pod  1/1       Running   0          10m    env=development
     ```
@@ -44,9 +47,11 @@ A label is a key-value pair that is meaningful and relevant to users with certai
 
     ```console
     kubectl label pods label-pod owner=you
-
     kubectl get pods --show-labels
+    ```
 
+    Output:
+    ```console
     NAME        READY     STATUS    RESTARTS   AGE    LABELS
     label-pod   1/1       Running   0          16m    env=development,owner=you
     ```
@@ -59,7 +64,10 @@ We can use labels for filtering a list.
 
     ```console
     kubectl get pods --selector owner=you
+    ```
 
+    Output:
+    ```console
     NAME       READY     STATUS    RESTARTS   AGE
     label-pod  1/1       Running   0          27m
     ```
@@ -70,7 +78,10 @@ We can use labels for filtering a list.
 
     ```console
     kubectl get pods -l env=development
+    ```
 
+    Output:
+    ```console
     NAME       READY     STATUS    RESTARTS   AGE
     label-pod  1/1       Running   0          27m
     ```
@@ -105,7 +116,10 @@ We can use labels for filtering a list.
 
     ```console
     kubectl get pods -l 'env in (production, development)'
+    ```
 
+    Output:
+    ```console
     NAME           READY     STATUS    RESTARTS   AGE
     label-pod      1/1       Running   0          43m
     label-pod2     1/1       Running   0          3m
@@ -184,7 +198,7 @@ You will get an error as phone number does not satisfy formatting requirements f
 5. Check the annotation was stored in the pods metadata
 
     ```
-    kubectl get pods --selector owner=you -o jsonpath='{.items[*].metadata.annotations.phone}'
+    kubectl get pods --selector owner=you -o jsonpath='{.items[*].metadata.annotations.phone}';echo
     ```
 
 ---
@@ -196,7 +210,3 @@ You will get an error as phone number does not satisfy formatting requirements f
 1. List the pods using selectors that will return all pods with versions not equal to 3
 
 Refer to the [documentation](https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/#label-selectors) to review selector syntax.
-
----
-
-Next: [Services](services.md)

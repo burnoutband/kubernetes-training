@@ -5,48 +5,73 @@ A pod is a collection of containers sharing a network and mount namespace and is
 ### Exercise 1: Launch a pod using the container image
 
 1. Run a pod.
-    ```
+    ```console
     kubectl run simpleservice --image=mhausenblas/simpleservice:0.5.0 --port=9876
     ```
 
 1. List pods and ensure that out pod is running and copy pod name.
-    ```
+    ```console
     kubectl get pods
     ```
 
+1. Show pod labels.
+    ```console
+    kubectl get pod --show-labels
+    ```
+
+    Output:
+    ```
+    NAME                             READY     STATUS    RESTARTS   AGE       LABELS
+    simpleservice-77cc9cf8c9-d5p6d   1/1       Running   0          1m        pod-template-hash=3377579475,run=simpleservice
+    ```
+
 1. Describe pod and copy its IP address.
-    ```
-    kubectl describe pod <pod-name>
+    ```console
+    kubectl describe $(kubectl get pod -l run=simpleservice -o name)
     ```
 
-1. From GCP console VM instances tab ssh to any of the nodes, either worker or master. (GCP allows you to ssh using web browser just by clicking on SSH button or with a new Cloud Shell session) This step is required because by default pod network is not open to outside world.
-
+    Now lets save that IP in env variable.
+    ```shell
+    PODIP=$(kubectl describe $(kubectl get pod -l run=simpleservice -o name) |awk '/IP/ {print $2}')
     ```
+
+1. From GCP console VM instances tab ssh to any of the nodes, either worker or master. (GCP allows you to ssh using web browser just by clicking on SSH button or with a new Cloud Shell session) This step is required because by default pod network is not open to outside world. This will be basically same thing we did after kops cluster validation.
+
+    ```console
     gcloud compute instances list
+    ```
 
+    Output:
+    ```console
     NAME                    ZONE        MACHINE_TYPE   PREEMPTIBLE  INTERNAL_IP  EXTERNAL_IP      STATUS
     master-us-west1-c-hkkn  us-west1-c  n1-standard-1               10.138.0.21  104.199.123.250  RUNNING
     nodes-4vdd              us-west1-c  n1-standard-2               10.138.0.23  35.233.214.200   RUNNING
     nodes-jl86              us-west1-c  n1-standard-2               10.138.0.22  35.247.98.64     RUNNING
     ```
 
-    Choose one of the systems from your list to log into.
-    ```
-    gcloud compute --project "$DEVSHELL_PROJECT_ID" ssh --zone "us-west1-c" "<vm-instance-name>"
+    Choose one of the systems from your list to log into. Reminder if we did not add project, region, and zone to our env we would have to add those in command line.
+
+    ```shell
+    gcloud compute ssh $(gcloud compute instances list|awk '/node/ {print $1;exit}') -- "PODIP=$PODIP bash -l"
     ```
 
 1. Connect to the pod.
-    ```
-    curl <pod-ip>:9876/info
+    ```shell
+    curl $PODIP:9876/info
     ```
     The output should look like this.
-    ```
+    ```shell
     {"host": "100.96.2.4:9876", "version": "0.5.0", "from": "10.128.0.4"}
     ```
     This is a response send by the application running inside the pod.
 
-1. `kubectl run` creates a deployment, so in order to get rid of the pod you have to execute the following command.
+    Exit the node:
+    ```console
+    exit
     ```
+
+1. `kubectl run` creates a deployment, so in order to get rid of the pod you have to execute the following command.
+    ```console
     kubectl delete deployment simpleservice
     ```
 
@@ -68,7 +93,7 @@ A pod is a collection of containers sharing a network and mount namespace and is
       - name: shell
         image: centos:7
         command:
-          - "bin/bash"
+          - "/bin/bash"
           - "-c"
           - "sleep 10000"
     EOF
@@ -76,22 +101,22 @@ A pod is a collection of containers sharing a network and mount namespace and is
     Here we specify that our new pod should contain 2 containers. The first one runs the same application as previously. The second one runs sleep command.
 
 1. Create a pod from `pod.yaml` configuration file.
-    ```
+    ```console
     kubectl create -f pod.yaml
     ```
 
 1. Navigate inside the second container.
-    ```
+    ```console
     kubectl exec twocontainers -c shell -i -t -- bash
     ```
 
 1. Access the simpleservice on localhost.
-    ```
+    ```console
     curl -s localhost:9876/info
     ```
 
 1. Delete the pod.
-    ```
+    ```console
     kubectl delete pod twocontainers
     ```
 
@@ -104,7 +129,3 @@ A pod is a collection of containers sharing a network and mount namespace and is
 
 1. Set [resources](https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/) property to limit how much memory and CPU the pod can use.
 1. Use [stress](https://linux.die.net/man/1/stress) to load the container, see what happens.
-
----
-
-Next: [Health Checks](health.md)

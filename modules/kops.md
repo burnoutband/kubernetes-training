@@ -12,20 +12,7 @@
 
 1. Open the GCP console from your browser. [GCP Console](https://console.cloud.google.com/)
 
-1. Login and select the assigned project or create a new one from the top menu.
-
-1. Enable (if not already) the Compute Engine API here [GCP Console](https://console.cloud.google.com/apis/api/compute.googleapis.com/)
-
 1. Launch the Google Cloud Shell from the top right menu.
-
-1. Run the following commands to set the proper region and zone:
-
-    ```console
-    gcloud config set compute/region us-west1
-
-    gcloud config set compute/zone us-west1-c
-    ```
-    >Note: Further commands will all be run in this shell.
 
 1. Install kops
 
@@ -45,13 +32,10 @@
 
 1. Create a state store
 
-    Run the following command and replace `<unique value>` with your username or other.
+    Run the following commands to create a unique bucket for our exercises.
 
     ```console
-    BUCKET="kubernetes-<unique value>"
-    ```
-
-    ```console
+    BUCKET="${PROJECT_ID}-kubernetes"
     gsutil mb gs://${BUCKET}
     ```
     Here we are creating a GCP bucket to store the cluster configuration for kops
@@ -119,6 +103,16 @@
    gcloud compute ssh $(gcloud compute instances list|awk '/master/ {print $1}')  
    ```
 
+   Once on the master you can also use kubectl commands
+   ```console
+   kubectl get nodes -o wide
+   ```
+
+   Exit master
+   ```console
+   exit
+   ```
+
 
 ### Exercise 2 (Optional): Identify resources that have been created
 
@@ -131,7 +125,3 @@
     * VPC Network -> Firewall rules
     * Network services -> Load balancing
     We will examine all created infrastructure in details on day 3.
-
----
-
-Next: [Pods](pods.md)
