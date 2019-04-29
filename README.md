@@ -11,6 +11,7 @@ Trainings
 1. [Public training in Chicago Sep 2018](trainings/public-Chi-Sep-2018.md)
 1. [Public training in San Francisco Jan 2019](trainings/public-SF-Jan-2019.md)
 1. [Public training in Washington DC April 2019](trainings/public-WA-April-2019.md)
+1. [Private training for Samsung April 2019](trainings/private-samsung-Apr-2019.md)
 
 Modules
 -------
