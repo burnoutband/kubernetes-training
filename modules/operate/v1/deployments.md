@@ -33,12 +33,12 @@ A deployment is a supervisor for pods and replica sets, giving you fine-grained 
     ```
 
 1. Create deployment.
-    ```
+    ```console
     kubectl create -f deployment.yaml
     ```
 
 1. Check deployment, replica set and pods, created by the previous command.
-    ```
+    ```console
     kubectl get deploy
     kubectl get rs
     kubectl get pods
@@ -46,10 +46,17 @@ A deployment is a supervisor for pods and replica sets, giving you fine-grained 
     Copy pod IP address
 
 1. SSH to any kubernetes node and query app info.
-    ```
-    curl <pod-ip>:9876/info
+    ```shell
+    PODIP=$(kubectl describe $(kubectl get pod -l app=simpleservice -o name) |awk '/IP/ {print $2;exit}')
+    gcloud compute ssh $(gcloud compute instances list|awk '/node/ {print $1;exit}') -- "curl $PODIP:9876/info;echo"
     ```
     Make sure that simpleservice returns version `0.9`
+
+    Output:
+    ```yaml
+    {"host": "100.96.2.5:9876", "version": "0.9", "from": "10.138.0.4"}
+    Connection to 35.233.191.94 closed.
+    ```
 
 1. Update `deployment.yaml` and set `SIMPLE_SERVICE_VERSION` to `1.0`.
 
@@ -77,7 +84,8 @@ A deployment is a supervisor for pods and replica sets, giving you fine-grained 
 
 1. Once again get pod ip, ssh to one of the nodes and send a request to simpleservice.
     ```
-    curl <pod-ip>:9876/info
+    PODIP=$(kubectl describe $(kubectl get pod -l app=simpleservice -o name) |awk '/IP/ {print $2;exit}')
+    gcloud compute ssh $(gcloud compute instances list|awk '/node/ {print $1;exit}') -- "curl $PODIP:9876/info;echo"
     ```
     Make sure that version now is "1.0"
 
@@ -95,14 +103,37 @@ A deployment is a supervisor for pods and replica sets, giving you fine-grained 
 1. One question we get a lot is if we can set custom messages for deployment change. Here is a way to do that.
 
     This is format:
-    ```
+    ```shell
     kubectl patch RESOURCE RESOURCE_NAME  --patch '{"metadata": {"annotations": {"my-annotation-key": "my-annotation-value"}}}'
-
     ```
 
-    This is the specific example:
+    Let's patch our simpleservice:
+    ```console
+    kubectl rollout history deploy/simpleservice
     ```
-    kubectl patch deployment tomcat-deployment --patch '{"metadata": {"annotations": {"tomcat-deployment kubernetes.io/change-cause": "Tomcat9.0.1"}}}'
+
+    Output before patch:
+    ```console
+    REVISION  CHANGE-CAUSE
+    2         <none>
+    3         <none>
+    ```
+
+    Patch typically would be done in CI, but could be done manually like this:
+    ```shell
+    kubectl patch deployment simpleservice --patch '{"metadata": {"annotations": {"kubernetes.io/change-cause": "Rollback v1.0 had issues"}}}'
+    ```
+
+    Get history once again:
+    ```console
+    kubectl rollout history deploy/simpleservice
+    ```
+
+    Output after patch:
+    ```console
+    REVISION  CHANGE-CAUSE
+    2         <none>
+    3         Rollback v1.0 had issues
     ```
 
 ### Exercise 2 (Optional): Observe how kubernetes restarts containers
@@ -117,7 +148,3 @@ A deployment is a supervisor for pods and replica sets, giving you fine-grained 
     ```
     kubectl delete deployment simpleservice
     ```
-
----
-
-Next: [Labels and Selectors](labels.md)

@@ -38,11 +38,11 @@
 1. Open two cloud-shell terminals, SSH into `k8s-master` in one, and `k8s-worker` on the other.
 
     ```shell
-    gcloud compute ssh "k8s-master"
+    gcloud compute ssh "k8s-master" --zone us-west2-b
     ```
 
     ```shell
-    gcloud compute ssh "k8s-worker"
+    gcloud compute ssh "k8s-worker" --zone us-west2-b
     ```
 
 1. On both master and worker nodes install prerequisite packages.
@@ -305,7 +305,7 @@
     kubectl get node
     ```
 
-1. Untaint the master node (to allow the schedulerto schedule pods everywhere).
+1. Untaint the master node (to allow the scheduler to schedule pods everywhere).
 
     ```shell
     kubectl taint nodes k8s-master node-role.kubernetes.io/master-
@@ -340,7 +340,7 @@
     kubectl exec -it bash-master bash
     ```
 
-1. Verify network connectivity.
+1. Verify network connectivity. (Your ip's maybe slightly different, `ifconfig` should help)
 
     ```shell
     ping 10.168.0.6 # Can ping own host (e.g. k8s-master)
@@ -355,8 +355,12 @@
 
 1. On the Worker node, examine forwarding rules.
 
-    ```console
+    ```shell
     sudo iptables -S FORWARD
+    ```
+    
+    Output:
+    ```
       -P FORWARD DROP
       -A FORWARD -m comment --comment "kubernetes forwarding rules" -j KUBE-FORWARD
       -A FORWARD -j DOCKER-ISOLATION
@@ -415,4 +419,3 @@ Check our blog post [Kubernetes Networking: How to Write Your Own CNI Plug-in wi
     ```shell
     gcloud compute instances delete k8s-master k8s-worker  --quiet
     ```
-

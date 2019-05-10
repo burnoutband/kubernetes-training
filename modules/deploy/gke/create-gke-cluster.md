@@ -24,7 +24,7 @@ Kubernetes cluster consists of two types of nodes. Master nodes coordinate conta
 
 ---
 
-1. Ensure all apis we may use are enabled, make sure you are running on cloud shell. 
+1. Ensure all apis we may use are enabled, make sure you are running on cloud shell.
 
     ```shell
     gcloud services enable \
@@ -45,7 +45,7 @@ Kubernetes cluster consists of two types of nodes. Master nodes coordinate conta
     gcloud container clusters create k8s-training \
     --num-nodes 2 \
     --machine-type n1-standard-2 \
-    --cluster-version 1.11.6-gke.3 \
+    --cluster-version 1.11.8-gke.6 \
     --labels=project=k8s-training \
     --image-type COS \
     --enable-autorepair \
@@ -56,10 +56,21 @@ Kubernetes cluster consists of two types of nodes. Master nodes coordinate conta
     --scopes "https://www.googleapis.com/auth/projecthosting,cloud-platform,compute-rw,storage-rw,service-control,service-management"
     ```
 
+    Output:
+    ```console
+    kubeconfig entry generated for k8s-training.
+    NAME        LOCATION    MASTER_VERSION  MASTER_IP       MACHINE_TYPE   NODE_VERSION  NUM_NODES  STATUS
+    k8s-training  us-west1-c  1.11.8-gke.6    35.235.101.300  n1-standard-2  1.11.8-gke.6  2          RUNNING
+    ```
+
 1. Get credentials for the cluster
 
     ```console
-    $ gcloud container clusters get-credentials k8s-training
+    gcloud container clusters get-credentials k8s-training
+    ```
+
+    Output:
+    ```console
     Fetching cluster endpoint and auth data.
     kubeconfig entry generated for k8s-training.
     ```

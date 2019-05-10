@@ -18,8 +18,8 @@ We wanted to show our students another way to deploying kubernetes and next two 
    We will create one master and two nodes for our cluster:
 
    ```shell
-   cd ~/k8s-training-jan2019
-   
+   cd ~/k8s-training
+
    gcloud compute instances create k8s-master-01 --zone=us-west1-c --machine-type=n1-standard-4 --subnet=default \
      --image=ubuntu-1604-xenial-v20190122a --image-project=ubuntu-os-cloud --boot-disk-size=20GB --boot-disk-type=pd-standard \
      --boot-disk-device-name=k8s-master-01 --metadata-from-file startup-script=modules/scripts/k8s-user-data.sh \
@@ -45,7 +45,7 @@ We wanted to show our students another way to deploying kubernetes and next two 
 
    ```shell
    cd
-   gcloud compute scp --recurse k8s-training-jan2019 k8s-master-01:
+   gcloud compute scp --recurse k8s-training k8s-master-01:
    ```
 
    Setup auto-complete for kubectl:
@@ -69,13 +69,13 @@ We wanted to show our students another way to deploying kubernetes and next two 
 
    I have prepared a config that has been tested, and we will make the necessary modifications and then will compare with defaults. We will be gathering the machine IP, and generating a join token that will be displayed after initialization of master is complete.
    ```shell
-   sed -i -e "s/<TOKEN>/$(kubeadm token generate)/" -e "s/<APIIP>/$(awk '/k8s-master/ {print $1}' /etc/hosts)/" k8s-training-jan2019/modules/yaml/kubeadm-config.yaml
+   sed -i -e "s/<TOKEN>/$(kubeadm token generate)/" -e "s/<APIIP>/$(awk '/k8s-master/ {print $1}' /etc/hosts)/" k8s-training/modules/yaml/kubeadm-config.yaml
    ```
 
    To compare we will generate to file and diff the files:
    ```shell
    kubeadm config print init-defaults > config-defaults.yaml
-   diff config-defaults.yaml k8s-training-jan2019/modules/yaml/kubeadm-config.yaml
+   diff config-defaults.yaml k8s-training/modules/yaml/kubeadm-config.yaml
    ```
 
    Notable differences are things generated during sed replacement, plus we added PodSecurityPolicy plugin, changed the cluster name, and added pod subnet. To look at more items that can be adjusted please look at GoDoc for [kubeadm api](https://godoc.org/k8s.io/kubernetes/cmd/kubeadm/app/apis/kubeadm/v1beta1).
@@ -84,7 +84,7 @@ We wanted to show our students another way to deploying kubernetes and next two 
 
    Run initialization with config:
    ```shell
-   sudo kubeadm init --config k8s-training-jan2019/modules/yaml/kubeadm-config.yaml
+   sudo kubeadm init --config k8s-training/modules/yaml/kubeadm-config.yaml
    ```    
 
    Once complete you will see a set of instructions to copy admin.conf to setup kubectl to be able to talk to kubernetes. Go ahead and run these:
@@ -139,7 +139,7 @@ We wanted to show our students another way to deploying kubernetes and next two 
    k8s-node-02     NotReady   <none>   17s   v1.13.2
    ```
 
-1. We will also be labeling nodes manually at this point as well. This becomes important for controllerManager as it checks if nodes have these annotations during volume creation and attaching to nodes. 
+1. We will also be labeling nodes manually at this point as well. This becomes important for controllerManager as it checks if nodes have these annotations during volume creation and attaching to nodes.
 
    ```shell
    kubectl label node k8s-node-01 failure-domain.beta.kubernetes.io/region=us-west1 failure-domain.beta.kubernetes.io/zone=us-west1-c
@@ -157,7 +157,3 @@ We wanted to show our students another way to deploying kubernetes and next two 
    ```
 
    Typically at this point the master and nodes would turn from `NotReady` to `Ready` state. Why do you think systems are not flipping to good state? Well we will be taking a look at this very question next.
-
----
-
-Next: [Pod and Network Security](security.md)

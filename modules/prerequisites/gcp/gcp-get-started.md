@@ -172,4 +172,3 @@ git clone https://github.com/Altoros/kubernetes-training.git
 ```shell
 cd kubernetes-training
 ```
-
