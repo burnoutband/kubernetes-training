@@ -106,9 +106,10 @@ Now you are ready to deploy the sample application to the Istio cluster. We will
 
     Inspect the generated file. Alternatively you can label a Namespace with `istio-injection=enabled` for automatic sidecar injection within the Namespace.
 
-1. Redeploy the sample app.
+1. Deploy the sample app.
 
     ```shell
+    kubectl create secret generic mysql --from-literal=password=very-secret-password # setup password for mysql and apps
     kubectl apply -f manifests/sample-app-istio.yaml
     ```
 
