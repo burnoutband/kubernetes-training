@@ -83,26 +83,19 @@ In this exercises you will deploy Istio onto the GKE cluster.
 
     All pods should be in `Running` or `Completed` state.
 
-Now you are ready to deploy the sample application to the Istio cluster.
+Now you are ready to deploy the sample application to the Istio cluster. We will be working in the [sample-app](../../sample-app) folder for most part in this section.
 
 ## Deploying a microservice with an Istio sidecar
 
-1. Delete and recreate the `frontend` service, change the type to `ClusterIP`.
+1. We will update our yaml with the location of our image we pushed out during container exercise. Switch to [sample-app](../../sample-app) folder.
 
-   > Note: You need to delete the spec->ports[\*]->nodePort key, if it exists
-
-    ```yaml
-    kind: Service
-    apiVersion: v1
-    metadata:
-      name: frontend
-    spec:
-      type: ClusterIP
-      ports:
-      -  port: 80
-      selector:
-        app: gceme
-        role: frontend
+    <!-- Added steps to pull to accelerate this process, build, and push to allow this module to stand on it's own. -->
+    ```shell
+    export IMAGE=gcr.io/$PROJECT_ID/sample-k8s-app:1.0.0
+    docker pull $IMAGE 2>/dev/null
+    docker build . -t $IMAGE
+    docker push $IMAGE
+    sed -i -e "s#REPLACE_WITH_IMAGE#$IMAGE#"  manifests/sample-app.yaml
     ```
 
 1. Inject the sidecar container to the sample app from the previous section.
@@ -237,8 +230,6 @@ You can create Services if you want to permanently expose Grafana, ServiceGraph 
 
 Let's now see how Istio can help us to add new features to our application. Let's imagine that we want to add a new feature to the app and test it on a small percent of our users (this is called 'Canary deployment').
 
-> Note: If you have already done this in exercise 5, skip to step 4.
-
 1. In the `sample-app` folder open `main.go` file.
 
 1. At line 60 find `version` constant and change it from `1.0.0` to `1.0.1`
@@ -269,7 +260,7 @@ Let's now see how Istio can help us to add new features to our application. Let'
     kubectl label namespace default istio-injection=enabled
     ```
 
-1. Delett the old sample application.
+1. Delete the old sample application.
 
     ```shell
     kubectl delete -f manifests/sample-app.yaml
@@ -326,6 +317,11 @@ Let's now see how Istio can help us to add new features to our application. Let'
 
 1. Open the app and refresh the page several times. You should see `1.0.0` backend version in 75% of cases and `1.0.1` in 25%.
 
+Another option to observe is using curl:
+```
+while true; do curl -s http://$GATEWAY_URL|grep -A1 Version; sleep 1;  done
+```
+
 ## Fault Injection
 
 One of the most difficult aspects of testing microservice applications is verifying that the application is resilient to failures. Each service should not assume that all its dependencies are available 100% of the time, instead it should be ready to handle any unexpected failure.
@@ -364,7 +360,7 @@ Now let's inject a native failure to the backend application to demonstrate how 
     ```
 1. Test the app. You should no longer see any failures. Each failed request now retries up to 3 times.
 
-Now let's demonstrate how we can automatically remove a failing app from the system (apply Circuit Breaking pattern).
+<!-- To do: Now let's demonstrate how we can automatically remove a failing app from the system (apply Circuit Breaking pattern). -->
 
 ## Control Egress Traffic
 
@@ -389,6 +385,8 @@ We still have one major issue with our app, it can't access external services an
 
 1. Check that the app can access GCP metadata.
 
----
+1. Lets disable sidecar injection from default by deleting label `istio-injection`
 
-Next: [Audit Logging](11-audit-logging.md)
+    ```
+    kubectl label ns default istio-injection-
+    ```
