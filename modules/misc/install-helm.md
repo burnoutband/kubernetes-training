@@ -12,6 +12,7 @@ Install Helm into `$HOME` directory as Cloud Shell erases everything else on dis
 1. Download the Helm binary
 
     ```
+    cd ~/
     wget https://storage.googleapis.com/kubernetes-helm/helm-v2.11.0-linux-amd64.tar.gz
     ```
 
@@ -22,10 +23,11 @@ Install Helm into `$HOME` directory as Cloud Shell erases everything else on dis
     cp linux-amd64/helm ~/bin/
     ```
 
-1. Grant `cluster-admin` role to your account
+1. Clean up files
 
-    ```shell
-    kubectl create clusterrolebinding cluster-admin-binding --clusterrole=cluster-admin --user=$(gcloud config get-value account)
+    ```
+    rm helm-v2.11.0-linux-amd64.tar.gz
+    rm -rf  linux-amd64/
     ```
 
 1. Create `tiller` service account with the `cluster-admin` role

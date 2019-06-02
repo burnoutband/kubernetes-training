@@ -29,8 +29,8 @@ Here you'll create your own copy of the `gceme` sample app in [Cloud Source Repo
 1. Ensure git is able to identify you:
 
     ```
-    git config --global user.email "YOUR-EMAIL-ADDRESS"
-    git config --global user.name "YOUR-NAME"
+    git config --global user.email "dev@company.com"
+    git config --global user.name "k8s expert"
     ```
 
 1. Add, commit, and push all the files:
