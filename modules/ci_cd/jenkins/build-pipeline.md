@@ -3,18 +3,16 @@ Build Pipeline
 
 Create a pipeline that builds application images using Google Container Builder service.
 
-1. Create an empty `Jenkinsfile` in the `sample-app` folder
+1. We will be creating a `Jenkinsfile` in the `sample-app` folder, and we will start with variables:
 
-1. Define variables
-
-    ```java
-    def project = 'PROJECT_ID'
+    ```shell
+    echo "def project = '"$PROJECT_ID"'
     def  appName = 'gceme'
-    def  feSvcName = "${appName}-frontend"
-    def  imageTag = "gcr.io/${project}/${appName}:${env.BRANCH_NAME}.${env.BUILD_NUMBER}"
+    def  feSvcName = \"\${appName}-frontend\"
+    def  imageTag = \"gcr.io/\${project}/\${appName}:\${env.BRANCH_NAME}.\${env.BUILD_NUMBER}\"" > Jenkinsfile
     ```
 
-    Change PROJECT_ID to the content of $PROJECT_ID variable.
+    `project` is the project we are working in
 
     `appName` is the name of sample application
 
@@ -105,7 +103,11 @@ Navigate to your Jenkins UI and follow these steps to configure a Pipeline job (
 1. Paste the **HTTPS clone URL** of your `sample-app` repo on Cloud Source Repositories into the **Project Repository** field.
     It will look like:
     ```
-    $ echo https://source.developers.google.com/p/$PROJECT_ID/r/gceme
+    echo https://source.developers.google.com/p/$PROJECT_ID/r/gceme
+    ```
+
+    Output:
+    ```
     https://source.developers.google.com/p/cloud-training-4-211211/r/gceme
     ```
 

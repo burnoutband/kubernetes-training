@@ -6,7 +6,7 @@ In this module you will deploy Jenkins on GKE to create and execute CI/CD pipeli
 ---
 
 Prerequisite:
-[Install Helm](install-helm.md)
+[Install Helm](../../misc/install-helm.md)
 
 Configure and Deploy Jenkins
 -----------------
@@ -107,12 +107,12 @@ Look at possible configuration options: https://github.com/helm/charts/blob/mast
     ```yaml
     Master:
         InstallPlugins:
-            - kubernetes:1.14.3
+            - kubernetes:1.15.5
             - workflow-aggregator:2.6
-            - workflow-job:2.31
-            - credentials-binding:1.17
-            - git:3.9.3
-            - google-oauth-plugin:0.6
+            - workflow-job:2.32
+            - credentials-binding:1.19
+            - git:3.10.0
+            - google-oauth-plugin:0.8
             - google-source-plugin:0.3
     ```
 
@@ -123,12 +123,12 @@ Look at possible configuration options: https://github.com/helm/charts/blob/mast
     ```yaml
     Master:
         InstallPlugins:
-            - kubernetes:1.14.3
+            - kubernetes:1.15.5
             - workflow-aggregator:2.6
-            - workflow-job:2.31
-            - credentials-binding:1.17
-            - git:3.9.3
-            - google-oauth-plugin:0.6
+            - workflow-job:2.32
+            - credentials-binding:1.19
+            - git:3.10.0
+            - google-oauth-plugin:0.8
             - google-source-plugin:0.3
         requests:
             cpu: "1"
@@ -155,7 +155,7 @@ Deploy Jenkins
 
 1. Deploy Jenkins chart using Helm
 
-    ```
+    ```shell
     helm install --name cd \
         --namespace cd \
         -f jenkins/values.yaml \
@@ -176,8 +176,12 @@ Deploy Jenkins
 
 1. Wait until Jenkins pod goes to the `Running` state and the container is in the `READY` state:
 
+    ```console
+    kubectl -n cd get pods --watch
     ```
-    $ kubectl -n cd get pods --watch
+
+    Output:
+    ```console
     NAME                          READY     STATUS    RESTARTS   AGE
     cd-jenkins-7c786475dd-vbhg4   1/1       Running   0          1m
     ```
@@ -193,8 +197,12 @@ Deploy Jenkins
 
 1. Now, check that the Jenkins Service was created properly:
 
+    ```console
+    kubectl get svc -n cd
     ```
-    $ kubectl get svc -n cd
+
+    Output:
+    ```console
     NAME               TYPE           CLUSTER-IP      EXTERNAL-IP   PORT(S)          AGE
     cd-jenkins         LoadBalancer   10.47.255.13    35.236.21.7   8080:31027/TCP   3m
     cd-jenkins-agent   ClusterIP      10.47.246.125   <none>        50000/TCP        3m
@@ -244,9 +252,9 @@ Troubleshooting:
 1. For this type of deployment via helm, you can not upgrade, but rather it has to be deleted and recreated.
 
     ```
-    ./helm upgrade -f jenkins/values.yaml cd stable/jenkins
+    helm upgrade -f jenkins/values.yaml cd stable/jenkins
     Error: UPGRADE FAILED: Deployment.apps "cd-jenkins" is invalid: spec.strategy.rollingUpdate: Forbidden: may not be specified when strategy `type` is 'Recreate'
 
-    ./helm del --purge cd
+    helm del --purge cd
     release "cd" deleted
     ```

@@ -12,7 +12,6 @@ Modify the pipeline to deploy the application.
 
     ```
     kubectl -n production create secret generic mysql --from-literal=password=root
-    secret/mysql created
     ```
 
 1. Add container image with `kubectl`

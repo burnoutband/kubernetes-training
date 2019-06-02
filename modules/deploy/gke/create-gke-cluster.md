@@ -82,6 +82,15 @@ Kubernetes cluster consists of two types of nodes. Master nodes coordinate conta
     ```
     This command should display all cluster nodes. In GCP console open 'Compute Engine' -> 'VM instances' to verify that each node has a corresponding VM.
 
+1. Grant cluster admin permissions to the current user:
+
+    ```shell
+    kubectl create clusterrolebinding cluster-admin-binding \
+      --clusterrole=cluster-admin \
+      --user="$(gcloud config get-value core/account)"
+    ```
+
+    > Note: You need these permissions to create the necessary role based access control (RBAC) rules for Istio, Helm, and other cluster level permissions. 
 
 Module summary
 --------------
