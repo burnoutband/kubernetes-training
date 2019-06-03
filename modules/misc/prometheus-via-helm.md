@@ -2,46 +2,14 @@
 
 The package manager for Kubernetes
 
+---
+
+Prerequisite:
+[Install Helm](install-helm.md)
+
+
 ### Exercise 1: Use helm to deploy prometheus
-
-1. Install helm
-    ```
-    wget https://storage.googleapis.com/kubernetes-helm/helm-v2.9.1-linux-amd64.tar.gz
-    tar -xvf helm-v2.9.1-linux-amd64.tar.gz
-    mv linux-amd64/helm ~/bin/
-    rm helm-v2.9.1-linux-amd64.tar.gz linux-amd64/ -rf
-    ```
-
-1. Initialize helm
-    ```
-    helm init
-    ```  
-1. Create helm service account
-    ```
-    apiVersion: v1
-    kind: ServiceAccount
-    metadata:
-      name: tiller
-      namespace: kube-system
-    ---
-    kind: ClusterRoleBinding
-    apiVersion: rbac.authorization.k8s.io/v1beta1
-    metadata:
-      name: tiller-clusterrolebinding
-    subjects:
-    - kind: ServiceAccount
-      name: tiller
-      namespace: kube-system
-    roleRef:
-      kind: ClusterRole
-      name: cluster-admin
-      apiGroup: ""
-    ```
-
-1. Update heml service account reference
-    ```
-    kubectl patch deploy --namespace kube-system tiller-deploy -p '{"spec":{"template":{"spec":{"serviceAccount":"tiller"}}}}'
-    ```
+---
 
 1. Add coreos chart repository
     ```
